@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Profiler } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
 
-const SignedInLinks = (props) => {
+const SignedInLinks = props => {
+  console.log(props);
   return (
     <ul className="right">
       <li>
@@ -16,7 +17,7 @@ const SignedInLinks = (props) => {
       </li>
       <li>
         <NavLink to="/" className="btn btn-floating pink lighten-1">
-          NN
+          {props.profile.initals}
         </NavLink>
       </li>
     </ul>

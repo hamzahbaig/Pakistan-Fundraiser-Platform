@@ -12,13 +12,14 @@ import { isLoaded } from "react-redux-firebase";
 function AuthIsLoaded({ children }) {
   const auth = useSelector(state => state.firebase.auth);
   if (!isLoaded(auth)) return null;
+  console.log(auth)
   return children;
 }
 
 function App() {
   return (
     <BrowserRouter>
-      <AuthIsLoaded>
+      {/* <AuthIsLoaded> */}
         <div className="App">
           <Navbar />
           <Switch>
@@ -29,7 +30,7 @@ function App() {
             <Route exact path="/create" component={CreateProject} />
           </Switch>
         </div>
-      </AuthIsLoaded>
+      {/* </AuthIsLoaded> */}
     </BrowserRouter>
   );
 }
