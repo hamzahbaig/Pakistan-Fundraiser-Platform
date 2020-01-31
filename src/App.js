@@ -19,7 +19,7 @@ function AuthIsLoaded({ children }) {
 function App() {
   return (
     <BrowserRouter>
-      {/* <AuthIsLoaded> */}
+      <AuthIsLoaded>
         <div className="App">
           <Navbar />
           <Switch>
@@ -30,7 +30,7 @@ function App() {
             <Route exact path="/create" component={CreateProject} />
           </Switch>
         </div>
-      {/* </AuthIsLoaded> */}
+      </AuthIsLoaded>
     </BrowserRouter>
   );
 }
