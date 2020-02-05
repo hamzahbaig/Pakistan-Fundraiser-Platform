@@ -1,8 +1,9 @@
 import React from "react";
 import { compose } from "redux";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import ProjectList from "../projects/ProjectList";
+import { getFirestore } from "redux-firestore";
 
 class Category extends React.Component {
   render() {
@@ -21,6 +22,7 @@ class Category extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     projects: state.firestore.ordered.projects
   };
@@ -28,10 +30,14 @@ const mapStateToProps = state => {
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect([
-    {
-      collection: "projects",
-      orderBy: ["createdAt", "desc"]
-    }
-  ])
+  firestoreConnect(ownProps => {
+    const { id } = ownProps.match.params;
+    return [
+      {
+        collection: "projects/fundraisers/" + id,
+        orderBy: ["createdAt", "desc"],
+        storeAs: "projects"
+      }
+    ];
+  })
 )(Category);
