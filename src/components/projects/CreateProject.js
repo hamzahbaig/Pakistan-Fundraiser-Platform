@@ -6,7 +6,8 @@ import { Redirect } from "react-router-dom";
 class CreateProject extends React.Component {
   state = {
     title: "",
-    content: ""
+    content: "",
+    category: ""
   };
 
   handleChange = e => {
@@ -32,6 +33,10 @@ class CreateProject extends React.Component {
           <div className="input-field">
             <label htmlFor="title">Title</label>
             <input type="text" id="title" onChange={this.handleChange} />
+          </div>
+          <div className="input-field">
+            <label htmlFor="title">Category</label>
+            <input type="text" id="category" onChange={this.handleChange} />
           </div>
           <div className="input-field">
             <label htmlFor="content">Project Content</label>
