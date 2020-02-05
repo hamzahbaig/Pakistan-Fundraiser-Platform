@@ -21,10 +21,11 @@ class Category extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  console.log(state);
+// I can remove flicker by dispatching an action to clean the previous state
+const mapStateToProps = (state, ownProps) => {
+  const { id } = ownProps.match.params;
   return {
-    projects: state.firestore.ordered.projects
+    projects: state.firestore.ordered[id]
   };
 };
 
@@ -36,7 +37,7 @@ export default compose(
       {
         collection: "projects/fundraisers/" + id,
         orderBy: ["createdAt", "desc"],
-        storeAs: "projects"
+        storeAs: id
       }
     ];
   })
