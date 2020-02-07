@@ -37,7 +37,7 @@ export default compose(
       {
         collection: "projects/fundraisers/" + id,
         orderBy: ["createdAt", "desc"],
-        storeAs: id
+        storeAs: id,
       }
     ];
   })

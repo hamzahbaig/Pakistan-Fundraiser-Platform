@@ -4,6 +4,7 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import moment from 'moment'
+
 const ProjectDetails = props => {
   const { project, auth } = props;
   if (!auth.uid) return <Redirect to="/signin" />;
@@ -34,6 +35,7 @@ const ProjectDetails = props => {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(ownProps,"hamzah")
   const id = ownProps.match.params.id;
   const projects = state.firestore.data.projects;
   const project = projects ? projects[id] : null;
