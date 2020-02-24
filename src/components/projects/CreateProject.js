@@ -32,7 +32,7 @@ class CreateProject extends React.Component {
 
     return (
       <div className="container">
-        {/* <form onSubmit={this.handleSubmit} className="white">
+        <form onSubmit={this.handleSubmit} className="white">
           <h5 className="grey-text text-darken-3">Create New Project</h5>
           <div className="input-field">
             <label htmlFor="title">Title</label>
@@ -53,39 +53,7 @@ class CreateProject extends React.Component {
           <div className="input-field">
             <button className="btn pink lighten-1 z-depth-0">Create</button>
           </div>
-        </form> */}
-        <div className="row">
-          <div className="input-field col m4">
-            <button
-              id={0}
-              value={this.state.activeList[0]}
-              onClick={this.handleChange}
-              className="btn pink lighten-1 z-depth-0"
-            >
-              Myself
-            </button>
-          </div>
-          <div className="input-field col m4">
-            <button
-              id={1}
-              value={this.state.activeList[1]}
-              onClick={this.handleChange}
-              className="btn pink lighten-1 z-depth-0"
-            >
-              Family
-            </button>
-          </div>
-          <div className="input-field col m4">
-            <button
-              id={2}
-              value={this.state.activeList[2]}
-              onClick={this.handleChange}
-              className="btn pink lighten-1 z-depth-0"
-            >
-              Friends
-            </button>
-          </div>
-        </div>
+        </form>
       </div>
     );
   }
