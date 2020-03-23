@@ -1,15 +1,18 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Navbar from "./components/layout/Navbar";
+import NavigationBar from "./components/layout/NavigationBar";
 import Dashboard from "./components/dashboard/Dashboard";
 import ProjectDetails from "./components/projects/ProjectDetails";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import CreateProject from "./components/projects/CreateProject";
 import Category from "./components/categories/Category";
-
+import UserForm from "./components/auth/UserForm";
 import { useSelector } from "react-redux";
 import { isLoaded } from "react-redux-firebase";
+import MenuAppBar from "./components/layout/MenuAppBar";
 
 function AuthIsLoaded({ children }) {
   const auth = useSelector(state => state.firebase.auth);
@@ -23,12 +26,12 @@ function App() {
     <BrowserRouter>
       <AuthIsLoaded>
         <div className="App">
-          <Navbar />
+          <MenuAppBar />
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/project/:id" component={ProjectDetails} />
             <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/signup" component={UserForm} />
             <Route exact path="/create" component={CreateProject} />
             <Route exact path="/category/:id" component={Category} />
           </Switch>
