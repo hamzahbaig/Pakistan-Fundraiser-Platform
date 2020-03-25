@@ -3,6 +3,12 @@ import LoginDetailsForm from "./LoginDetailsForm";
 import PersonalDetailsForm from "./PersonalDetailsForm";
 import IndividualForm from "./IndividualForm";
 import NGOForm from "./NGOForm";
+import { connect } from "react-redux";
+import { signUp } from "../../store/actions/authActions";
+import { useTheme } from "@material-ui/core";
+import Success from "./Success";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Redirect } from "react-router-dom";
 
 export class UserForm extends Component {
   state = {
@@ -25,6 +31,7 @@ export class UserForm extends Component {
   };
 
   nextStep = () => {
+    console.log("ham,zahh");
     const { step } = this.state;
     this.setState({
       step: step + 1
@@ -50,14 +57,18 @@ export class UserForm extends Component {
       step: step - 2
     });
   };
+
   handleChange = input => e => {
-    console.log("gamza");
     e.preventDefault();
-    console.log(input, e.target.value);
     this.setState({ [input]: e.target.value });
-    console.log(this.state);
   };
+
+  handleSubmit = () => {
+    this.props.signUp(this.state);
+  };
+
   render() {
+    const { auth, authError, status } = this.props;
     const { step } = this.state;
     const {
       email,
@@ -76,6 +87,7 @@ export class UserForm extends Component {
       ngoEmail,
       ngoWebsiteLink
     } = this.state;
+
     const values = {
       email,
       password,
@@ -93,16 +105,20 @@ export class UserForm extends Component {
       ngoEmail,
       ngoWebsiteLink
     };
-
+    if (authError == "success") return <Success history={this.props.history} />;
     switch (step) {
       case 1:
-        return (
-          <LoginDetailsForm
-            nextStep={this.nextStep}
-            handleChange={this.handleChange}
-            values={values}
-          />
-        );
+        if (auth.uid) {
+          return <Redirect to="/" />;
+        } else {
+          return (
+            <LoginDetailsForm
+              nextStep={this.nextStep}
+              handleChange={this.handleChange}
+              values={values}
+            />
+          );
+        }
       case 2:
         return (
           <PersonalDetailsForm
@@ -118,6 +134,7 @@ export class UserForm extends Component {
           <IndividualForm
             nextStep={this.nextStep}
             prevStep={this.prevStep}
+            skipStep={this.skipStep}
             handleChange={this.handleChange}
             values={values}
           />
@@ -131,8 +148,37 @@ export class UserForm extends Component {
             values={values}
           />
         );
+      case 5:
+        this.handleSubmit();
+        this.nextStep();
+      case 6:
+        return (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: window.innerHeight
+            }}
+          >
+            <CircularProgress size={60} />
+          </div>
+        );
     }
   }
 }
 
-export default UserForm;
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth,
+    authError: state.auth.authError
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    signUp: newUser => dispatch(signUp(newUser))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserForm);

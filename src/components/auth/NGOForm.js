@@ -27,6 +27,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const checkInputs = fields => {
+  if (
+    fields.ngoName == "" ||
+    fields.ngoEmail == "" ||
+    fields.ngoCity == "" ||
+    fields.ngoAddress == "" ||
+    fields.ngoContact == ""
+  ) {
+    return true;
+  }
+  return false;
+};
 export default function NGOForm(props) {
   const classes = useStyles();
 
@@ -83,7 +95,6 @@ export default function NGOForm(props) {
           <TextField
             autoComplete="fname"
             variant="outlined"
-            required
             fullWidth
             label="NGO Website Link"
             margin="normal"
@@ -108,8 +119,10 @@ export default function NGOForm(props) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                disabled={checkInputs(props.values)}
+                onClick = {props.nextStep}
               >
-                Finish
+                Submit
               </Button>
             </Grid>
           </Grid>

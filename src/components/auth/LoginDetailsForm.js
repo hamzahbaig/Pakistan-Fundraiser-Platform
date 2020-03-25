@@ -34,7 +34,6 @@ const checkInputs = (e, p) => {
   if (e == "" || p == "") {
     return true;
   }
-  console.log(e,p)
   return false;
 };
 export default function LoginDetailsForm(props) {

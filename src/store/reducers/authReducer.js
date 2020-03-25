@@ -1,5 +1,5 @@
 const initState = {
-  authError: null
+  authError: null,
 };
 
 // reducer passed into store which manipulates the state
@@ -26,10 +26,10 @@ const authReducer = (state = initState, action) => {
     console.log("sign up successful")
     return {
       ...state,
-      authError: null
+      authError: "success"
     }
     case "SIGNUP_ERROR":
-      console.log("signup error")
+      console.log("signup error HAMZAHHH")
       return {
         ...state,
         authError: action.err.message

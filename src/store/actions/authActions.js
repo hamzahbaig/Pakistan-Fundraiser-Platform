@@ -35,16 +35,33 @@ export const signUp = newUser => {
       .auth()
       .createUserWithEmailAndPassword(newUser.email, newUser.password)
       .then(resp => {
-        return firestore
-          .collection("users")
-          .doc(resp.user.uid)
-          .set({
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            initals: newUser.firstName[0] + newUser.lastName[0],
-            email: newUser.email,
-            phoneNumber: newUser.phoneNumber
-          });
+        if (newUser.userType == "Individual") {
+          return firestore
+            .collection("users")
+            .doc(resp.user.uid)
+            .set({
+              firstName: newUser.individualFirstName,
+              lastName: newUser.individualLastName,
+              city: newUser.individualCity,
+              address: newUser.individualAddress,
+              contact: newUser.individualContact,
+              cnic: newUser.individualCNIC,
+              email: newUser.email
+            });
+        } else {
+          return firestore
+            .collection("NGO")
+            .doc(resp.user.uid)
+            .set({
+              email: newUser.email,
+              ngoName: newUser.ngoName,
+              ngoEmail: newUser.ngoEmail,
+              ngoCity: newUser.ngoCity,
+              ngoAddress: newUser.ngoAddress,
+              ngoContact: newUser.ngoContact,
+              ngoWebsiteLink: newUser.ngoWebsiteLink
+            });
+        }
       })
       .then(() => {
         dispatch({ type: "SIGNUP_SUCCESS" });

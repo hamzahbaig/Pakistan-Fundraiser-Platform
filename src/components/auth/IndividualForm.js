@@ -28,6 +28,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const checkInputs = fields => {
+  if (
+    fields.individualFirstName == "" ||
+    fields.individualLastName == "" ||
+    fields.individualCity == "" ||
+    fields.individualAddress == "" ||
+    fields.individualContact == "" ||
+    fields.individualCNIC == ""
+  ) {
+    return true;
+  }
+  return false;
+};
 export default function IndivualForm(props) {
   const classes = useStyles();
 
@@ -116,8 +129,10 @@ export default function IndivualForm(props) {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                disabled={checkInputs(props.values)}
+                onClick ={props.skipStep}
               >
-                Finish
+                Submit
               </Button>
             </Grid>
           </Grid>
