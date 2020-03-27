@@ -4,7 +4,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
-import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -45,7 +44,7 @@ export default function Success(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={props.history.push("/")}
+            onClick={() => props.history.push("/")}
           >
             Finish
           </Button>

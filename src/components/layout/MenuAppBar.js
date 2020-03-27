@@ -3,13 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
 import { Container } from "react-bootstrap";
-import MenuIcon from "@material-ui/icons/Menu";
+import { connect } from "react-redux";
 
+import SignedInLinks from "./SignedInLinks";
+import SignedOutLinks from "./SignedOutLinks";
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -22,12 +20,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MenuAppBar = () => {
+const MenuAppBar = props => {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
+  const [authStatus, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
+  const { auth, profile } = props;
   const handleChange = event => {
     setAuth(event.target.checked);
   };
@@ -49,53 +47,19 @@ const MenuAppBar = () => {
               Fundraiser Platform
             </Typography>
             {auth.uid ? (
-              <div>
-                <IconButton onClick={handleMenu} color="inherit">
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
-                  }}
-                  open={open}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>Dashboard</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </Menu>
-              </div>
+              <SignedInLinks
+                handleClose={handleClose}
+                handleMenu={handleMenu}
+                anchorEl={anchorEl}
+                open={open}
+              />
             ) : (
-              <div>
-                <IconButton onClick={handleMenu} color="inherit">
-                  <MenuIcon />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
-                  }}
-                  open={open}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>Sign Up</MenuItem>
-                  <MenuItem onClick={handleClose}>Login</MenuItem>
-                </Menu>
-              </div>
+              <SignedOutLinks
+                handleClose={handleClose}
+                handleMenu={handleMenu}
+                anchorEl={anchorEl}
+                open={open}
+              />
             )}
           </Toolbar>
         </Container>
@@ -103,5 +67,10 @@ const MenuAppBar = () => {
     </div>
   );
 };
-
-export default MenuAppBar;
+const mapStateToProps = state => {
+  return {
+    auth: state.firebase.auth,
+    profile: state.firebase.profile
+  };
+};
+export default connect(mapStateToProps)(MenuAppBar);

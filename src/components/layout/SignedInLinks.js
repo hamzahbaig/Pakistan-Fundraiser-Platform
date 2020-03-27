@@ -2,25 +2,51 @@ import React, { Profiler } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const SignedInLinks = props => {
-  console.log(props);
   return (
-    <ul className="right">
-      <li>
-        <NavLink to="/create">New Project</NavLink>
-      </li>
-      <li>
-        <a onClick={props.signOut} to="/">
-          Log Out
-        </a>
-      </li>
-      <li>
-        <NavLink to="/" className="btn btn-floating pink lighten-1">
-          {props.profile.initals}
-        </NavLink>
-      </li>
-    </ul>
+    <div>
+      <IconButton onClick={props.handleMenu} color="inherit">
+        <AccountCircle />
+      </IconButton>
+      <Menu
+        id="menu-appbar"
+        anchorEl={props.anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
+        open={props.open}
+        onClose={props.handleClose}
+      >
+        <MenuItem
+          onClick={props.handleClose}
+          component={NavLink}
+          to={"/dashboard"}
+        >
+          Dashboard
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            props.signOut();
+            props.handleClose();
+          }}
+          component={NavLink}
+          to={"/"}
+        >
+          Logout
+        </MenuItem>
+      </Menu>
+    </div>
   );
 };
 

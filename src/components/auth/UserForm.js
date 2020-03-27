@@ -5,7 +5,6 @@ import IndividualForm from "./IndividualForm";
 import NGOForm from "./NGOForm";
 import { connect } from "react-redux";
 import { signUp } from "../../store/actions/authActions";
-import { useTheme } from "@material-ui/core";
 import Success from "./Success";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Redirect } from "react-router-dom";
