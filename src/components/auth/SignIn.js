@@ -1,17 +1,18 @@
 import React from "react";
+import SignInForm from "./SignInForm";
 import { connect } from "react-redux";
 import { signIn } from "../../store/actions/authActions";
 import { Redirect } from "react-router-dom";
-class SignIn extends React.Component {
+
+export class SignIn extends React.Component {
   state = {
     email: "",
     password: ""
   };
 
-  handleChange = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
+  handleChange = input => e => {
+    e.preventDefault();
+    this.setState({ [input]: e.target.value });
   };
 
   handleSubmit = e => {
@@ -20,28 +21,14 @@ class SignIn extends React.Component {
   };
   render() {
     const { authError, auth } = this.props;
-    console.log(auth.uid,"uid")
     if (auth.uid) return <Redirect to="/" />;
     return (
-      <div className="container">
-        <form onSubmit={this.handleSubmit} className="white">
-          <h5 className="grey-text text-darken-3">Sign In</h5>
-          <div className="input-field">
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" onChange={this.handleChange} />
-          </div>
-          <div className="input-field">
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" onChange={this.handleChange} />
-          </div>
-          <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">Login</button>
-            <div className="red-text center">
-              {authError ? <p>{authError}</p> : null}
-            </div>
-          </div>
-        </form>
-      </div>
+      <SignInForm
+        email={this.state.email}
+        password={this.state.password}
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+      />
     );
   }
 }

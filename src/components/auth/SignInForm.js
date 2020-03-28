@@ -36,15 +36,15 @@ const checkInputs = (e, p) => {
   }
   return false;
 };
-export default function LoginDetailsForm(props) {
-  const classes = useStyles();
 
+const SignInForm = props => {
+  const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}></Avatar>
         <Typography component="h1" variant="h5">
-          Register
+          Login
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -52,37 +52,34 @@ export default function LoginDetailsForm(props) {
             margin="normal"
             required
             fullWidth
-            value={props.values.email}
-            onChange={props.handleChange("email")}
             label="Email Address"
+            onChange={props.handleChange("email")}
           />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            value={props.values.password}
             label="Password"
-            onChange={props.handleChange("password")}
             type="password"
+            onChange={props.handleChange("password")}
           />
-         
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={props.nextStep}
-            disabled={checkInputs(props.values.email, props.values.password)}
+            onClick={props.handleSubmit}
+            disabled={checkInputs(props.email, props.password)}
           >
             Next
           </Button>
           <Grid container>
             <Grid item xs></Grid>
             <Grid item>
-              <Link href="/signin" variant="body2">
-                {"Already have an account? Sign in"}
+              <Link href="/signup" variant="body2">
+                {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
           </Grid>
@@ -90,4 +87,6 @@ export default function LoginDetailsForm(props) {
       </div>
     </Container>
   );
-}
+};
+
+export default SignInForm;
