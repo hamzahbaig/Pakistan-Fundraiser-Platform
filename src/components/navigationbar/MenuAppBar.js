@@ -37,7 +37,21 @@ const MenuAppBar = props => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const links = auth.uid ? (
+    <SignedInLinks
+      handleClose={handleClose}
+      handleMenu={handleMenu}
+      anchorEl={anchorEl}
+      open={open}
+    />
+  ) : (
+    <SignedOutLinks
+      handleClose={handleClose}
+      handleMenu={handleMenu}
+      anchorEl={anchorEl}
+      open={open}
+    />
+  );
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -46,21 +60,7 @@ const MenuAppBar = props => {
             <Typography variant="h6" className={classes.title}>
               Fundraiser Platform
             </Typography>
-            {auth.uid ? (
-              <SignedInLinks
-                handleClose={handleClose}
-                handleMenu={handleMenu}
-                anchorEl={anchorEl}
-                open={open}
-              />
-            ) : (
-              <SignedOutLinks
-                handleClose={handleClose}
-                handleMenu={handleMenu}
-                anchorEl={anchorEl}
-                open={open}
-              />
-            )}
+            {links}
           </Toolbar>
         </Container>
       </AppBar>

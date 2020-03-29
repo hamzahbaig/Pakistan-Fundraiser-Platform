@@ -73,7 +73,7 @@ const SignInForm = props => {
             onClick={props.handleSubmit}
             disabled={checkInputs(props.email, props.password)}
           >
-            Next
+            Login
           </Button>
           <Grid container>
             <Grid item xs></Grid>
