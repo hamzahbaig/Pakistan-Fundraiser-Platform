@@ -2,10 +2,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Dashboard from "./components/dashboard/Dashboard";
 import ProjectDetails from "./components/projects/ProjectDetails";
 import SignIn from "./components/auth/SignIn";
-import SignUp from "./components/auth/SignUp";
 import CreateProject from "./components/projects/CreateProject";
 import Category from "./components/categories/Category";
 import UserForm from "./components/auth/UserForm";
@@ -28,7 +26,6 @@ function App() {
           <MenuAppBar />
           <Switch>
             <Route exact path="/" component={HomePage} />
-            {/* <Route exact path="/" component={Dashboard} /> */}
             <Route exact path="/project/:id" component={ProjectDetails} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={UserForm} />
