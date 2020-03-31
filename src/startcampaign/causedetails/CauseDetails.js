@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Dropdown } from "semantic-ui-react";
+import CauseDetailsForm from "./forms/CauseDetailsForm";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -57,10 +58,12 @@ const CauseDetails = () => {
         <span className="mt-3">
           Raising Funds for{" "}
           <Dropdown inline options={causeType} value={"Education"} />
-          cause
+          {" "}cause
         </span>
       </div>
 
+
+      <CauseDetailsForm />
       <Grid container spacing={3}>
         <Grid item xs={6} sm={6}>
           <Button fullWidth variant="contained" className={classes.submit}>
