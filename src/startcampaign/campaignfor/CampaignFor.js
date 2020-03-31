@@ -1,20 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Dropdown } from "semantic-ui-react";
-import Paper from "@material-ui/core/Paper";
-import MyselfForm from "./MyselfForm";
-import { Progress } from "semantic-ui-react";
-import { ProgressBar } from "react-bootstrap";
-import BeneficiaryForm from "./BeneficiaryForm";
+import MyselfForm from "./forms/MyselfForm";
+import ProjectForm from "./forms/ProjectForm";
+import BeneficiaryForm from "./forms/BeneficiaryForm";
+
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -52,8 +47,10 @@ const campaignOptions = [
     value: "Beneficiary"
   }
 ];
+
 const CampaignFor = () => {
   const classes = useStyles();
+  const [value, setValue] = useState("Myself");
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -66,14 +63,23 @@ const CampaignFor = () => {
           <Dropdown
             inline
             options={campaignOptions}
-            defaultValue={campaignOptions[0].value}
+            onChange={(e, { value }) => {
+              setValue(value);
+            }}
+            value={value}
           />
         </span>
       </div>
-      <BeneficiaryForm />
-      <Grid item className={classes.submit} sm={12}>
-        <ProgressBar now={60} style={{ height: 20 }} label={`${60}%`} />
-      </Grid>
+      {value == "Myself" ? (
+          <MyselfForm />
+      ) : null}
+      {value == "Project" ? (
+          <ProjectForm />
+      ) : null}
+      {value == "Beneficiary" ? (
+          <BeneficiaryForm />
+      ) : null}
+
       <Grid container spacing={3}>
         <Grid item xs={6} sm={6}>
           <Button fullWidth variant="contained" className={classes.submit}>

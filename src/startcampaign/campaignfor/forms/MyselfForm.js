@@ -1,11 +1,11 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
-import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { Select, Dropdown } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react";
 import Typography from "@material-ui/core/Typography";
+import Zoom from "@material-ui/core/Zoom";
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -46,33 +46,35 @@ const friendOptions = [
 const MyselfForm = () => {
   const classes = useStyles();
   return (
-    <Paper elevation={5} className={classes.root}>
-      <form className={classes.form} noValidate>
-        <Typography component="h1" variant="h5" className="mb-2" >
+    <Zoom in={true}>
+      <Paper elevation={5} className={classes.root}>
+        <form className={classes.form} noValidate>
+          <Typography component="h1" variant="h5" className="mb-2">
             Myself Form
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="First Name" />
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label="First Name" />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label="Last Name" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Age" />
+            </Grid>
+            <Grid item xs={12}>
+              <Dropdown
+                className={classes.gender}
+                placeholder="Select Gender"
+                fluid
+                selection
+                options={friendOptions}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="Last Name" />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField fullWidth label="Age" />
-          </Grid>
-          <Grid item xs={12}>
-            <Dropdown
-              className={classes.gender}
-              placeholder="Select Gender"
-              fluid
-              selection
-              options={friendOptions}
-            />
-          </Grid>
-        </Grid>
-      </form>
-    </Paper>
+        </form>
+      </Paper>
+    </Zoom>
   );
 };
 

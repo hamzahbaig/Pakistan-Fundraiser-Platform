@@ -1,15 +1,15 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
-import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { Select, Dropdown } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MaskedInput from "react-text-mask";
 import PropTypes from "prop-types";
+import Zoom from "@material-ui/core/Zoom";
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const friendOptions = [
+const genderOptions = [
   {
     key: "Male",
     text: "Male",
@@ -124,45 +124,47 @@ cnic.propTypes = {
 const BeneficiaryForm = () => {
   const classes = useStyles();
   return (
-    <Paper elevation={5} className={classes.root}>
-      <form className={classes.form} noValidate>
-        <Typography component="h1" variant="h5" className="mb-2">
-          Beneficiary Form
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="First Name" />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="Last Name" />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField fullWidth label="Age" />
-          </Grid>
+    <Zoom in={true}>
+      <Paper elevation={5} className={classes.root}>
+        <form className={classes.form} noValidate>
+          <Typography component="h1" variant="h5" className="mb-2">
+            Beneficiary Form
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label="First Name" />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label="Last Name" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Age" />
+            </Grid>
 
-          <Grid item xs={12}>
-            <TextField fullWidth label="Address" />
+            <Grid item xs={12}>
+              <TextField fullWidth label="Address" />
+            </Grid>
+            <Grid item xs={12}>
+              <Dropdown
+                className={classes.gender}
+                placeholder="Select Gender"
+                fluid
+                selection
+                options={genderOptions}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputLabel>Contact</InputLabel>
+              <Input fullWidth inputComponent={contact} />
+            </Grid>
+            <Grid item xs={12}>
+              <InputLabel>CNIC</InputLabel>
+              <Input fullWidth inputComponent={cnic} />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Dropdown
-              className={classes.gender}
-              placeholder="Select Gender"
-              fluid
-              selection
-              options={friendOptions}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <InputLabel>Contact</InputLabel>
-            <Input fullWidth inputComponent={contact} />
-          </Grid>
-          <Grid item xs={12}>
-            <InputLabel>CNIC</InputLabel>
-            <Input fullWidth inputComponent={cnic} />
-          </Grid>
-        </Grid>
-      </form>
-    </Paper>
+        </form>
+      </Paper>
+    </Zoom>
   );
 };
 
