@@ -6,7 +6,7 @@ export class HomePage extends Component {
   render() {
     return (
       <div>
-        <MainSection />
+        <MainSection history={this.props.history} />
         <CategorySection />
       </div>
     );

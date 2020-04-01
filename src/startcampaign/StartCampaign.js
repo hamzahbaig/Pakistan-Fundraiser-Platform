@@ -26,13 +26,19 @@ export class StartCampaign extends Component {
     const { step } = this.state;
     switch (step) {
       case 1:
-        return <CampaignFor nextStep={this.nextStep} />;
+        return <CampaignFor nextStep={this.nextStep} step={this.state.step} />;
       case 2:
         return (
-          <CauseDetails nextStep={this.nextStep} prevStep={this.prevStep} />
+          <CauseDetails
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            step={this.state.step}
+          />
         );
       case 3:
-        return <ElaborateCause prevStep={this.prevStep} />;
+        return (
+          <ElaborateCause prevStep={this.prevStep} step={this.state.step} />
+        );
     }
     return (
       <div>

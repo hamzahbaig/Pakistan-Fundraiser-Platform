@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MainSection = () => {
+const MainSection = props => {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -39,12 +39,17 @@ const MainSection = () => {
               color="textSecondary"
               paragraph
             >
-              Giving is not just about make a donation, it's about making a difference.
+              Giving is not just about make a donation, it's about making a
+              difference.
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => props.history.push("/startcampaign")}
+                  >
                     Start a Campaign
                   </Button>
                 </Grid>

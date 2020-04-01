@@ -26,7 +26,8 @@ function App() {
         <div className="App">
           <MenuAppBar />
           <Switch>
-            <Route exact path="/" component={StartCampaign} />
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/startcampaign" component={StartCampaign} />
             <Route exact path="/project/:id" component={ProjectDetails} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={UserForm} />

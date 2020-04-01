@@ -9,7 +9,7 @@ import { Dropdown } from "semantic-ui-react";
 import MyselfForm from "./forms/MyselfForm";
 import ProjectForm from "./forms/ProjectForm";
 import BeneficiaryForm from "./forms/BeneficiaryForm";
-
+import { ProgressBar } from "react-bootstrap";
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -69,7 +69,15 @@ const CampaignFor = props => {
       {value == "Myself" ? <MyselfForm /> : null}
       {value == "Project" ? <ProjectForm /> : null}
       {value == "Beneficiary" ? <BeneficiaryForm /> : null}
-
+      <Grid item className={classes.submit}>
+        <ProgressBar
+          now={props.step}
+          label={`${props.step*20}%`}
+          style={{ height: 25 }}
+          min={0}
+          max={4}
+        />
+      </Grid>
       <Grid container spacing={3} style={{ flexDirection: "row-reverse" }}>
         <Grid item xs={6} sm={6}>
           <Button

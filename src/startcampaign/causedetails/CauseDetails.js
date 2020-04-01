@@ -9,6 +9,7 @@ import { Dropdown } from "semantic-ui-react";
 import CauseDetailsForm from "./forms/CauseDetailsForm";
 import EducationForm from "./forms/EducationForm";
 import HealthForm from "./forms/HealthForm";
+import { ProgressBar } from "react-bootstrap";
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -68,7 +69,18 @@ const CauseDetails = props => {
       </div>
       {value == "Education" ? <EducationForm /> : null}
       {value == "Health" ? <HealthForm /> : null}
+
       <CauseDetailsForm />
+
+      <Grid item className={classes.submit}>
+        <ProgressBar
+          now={props.step}
+          label={`${props.step*20}%`}
+          style={{ height: 25 }}
+          min={0}
+          max={4}
+        />
+      </Grid>
       <Grid container spacing={3}>
         <Grid item xs={6} sm={6}>
           <Button
