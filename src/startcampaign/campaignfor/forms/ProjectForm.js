@@ -3,14 +3,14 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { Dropdown } from "semantic-ui-react";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MaskedInput from "react-text-mask";
 import PropTypes from "prop-types";
 import Zoom from "@material-ui/core/Zoom";
-
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 function contact(props) {
   const { inputRef, ...other } = props;
 
@@ -133,14 +133,13 @@ const ProjectForm = () => {
             <Grid item xs={12}>
               <TextField fullWidth label="Project Organiser Address" />
             </Grid>
-            <Grid item xs={12}>
-              <Dropdown
-                className={classes.gender}
-                placeholder="Select Gender"
-                fluid
-                selection
-                options={genderOptions}
-              />
+            <Grid item xs={12} className="mt-2">
+              <InputLabel>Gender</InputLabel>
+              <Select fullWidth>
+                <MenuItem value={"Male"}>Male</MenuItem>
+                <MenuItem value={"Female"}>Female</MenuItem>
+                <MenuItem value={"Other"}>Other</MenuItem>
+              </Select>
             </Grid>
             <Grid item xs={12}>
               <InputLabel>Project Organiser Contact</InputLabel>
