@@ -3,7 +3,6 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { Dropdown } from "semantic-ui-react";
 import Typography from "@material-ui/core/Typography";
 import Zoom from "@material-ui/core/Zoom";
 import Input from "@material-ui/core/Input";
@@ -11,14 +10,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MaskedInput from "react-text-mask";
 import PropTypes from "prop-types";
 import Switch from "@material-ui/core/Switch";
-import Radio from "@material-ui/core/Radio";
 import Collapse from "@material-ui/core/Collapse";
 
 const useStyles = makeStyles(theme => ({
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
-  },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(-1)

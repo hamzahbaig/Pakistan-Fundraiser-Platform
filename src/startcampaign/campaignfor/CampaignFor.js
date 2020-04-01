@@ -21,10 +21,6 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
-  },
   submit: {
     margin: theme.spacing(3, 0, 2)
   }
@@ -70,15 +66,9 @@ const CampaignFor = () => {
           />
         </span>
       </div>
-      {value == "Myself" ? (
-          <MyselfForm />
-      ) : null}
-      {value == "Project" ? (
-          <ProjectForm />
-      ) : null}
-      {value == "Beneficiary" ? (
-          <BeneficiaryForm />
-      ) : null}
+      {value == "Myself" ? <MyselfForm /> : null}
+      {value == "Project" ? <ProjectForm /> : null}
+      {value == "Beneficiary" ? <BeneficiaryForm /> : null}
 
       <Grid container spacing={3}>
         <Grid item xs={6} sm={6}>
