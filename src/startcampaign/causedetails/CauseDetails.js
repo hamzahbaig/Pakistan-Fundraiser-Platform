@@ -7,7 +7,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Dropdown } from "semantic-ui-react";
 import CauseDetailsForm from "./forms/CauseDetailsForm";
-
+import EducationForm from "./forms/EducationForm";
+import HealthForm from "./forms/HealthForm";
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -48,6 +49,7 @@ const causeType = [
 
 const CauseDetails = () => {
   const classes = useStyles();
+  const [value, setValue] = useState("Education");
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -57,12 +59,19 @@ const CauseDetails = () => {
         </Typography>
         <span className="mt-3">
           Raising Funds for{" "}
-          <Dropdown inline options={causeType} value={"Education"} />
-          {" "}cause
+          <Dropdown
+            inline
+            options={causeType}
+            onChange={(e, { value }) => {
+              setValue(value);
+            }}
+            value={value}
+          />{" "}
+          cause
         </span>
       </div>
-
-
+      {value == "Education" ? <EducationForm /> : null}
+      {value == "Health" ? <HealthForm /> : null}
       <CauseDetailsForm />
       <Grid container spacing={3}>
         <Grid item xs={6} sm={6}>
