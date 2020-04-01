@@ -8,9 +8,6 @@ import Container from "@material-ui/core/Container";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ElaborateCauseForm from "./forms/ElaborateCauseForm";
-import Input from "@material-ui/core/Input";
-import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
-import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -38,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ElaborateCause = () => {
+const ElaborateCause = props => {
   const classes = useStyles();
   const [value, setValue] = useState("Myself");
   const [story, setStory] = useState(
@@ -56,18 +53,8 @@ const ElaborateCause = () => {
           Elaborate Cause Details
         </Typography>
       </div>
-      <ElaborateCauseForm />
 
-      {/* Upload Component */}
-      <Grid item className={classes.story}>
-        <Typography component="h1" variant="h5">
-          Attach Supporting Documents
-        </Typography>
-      </Grid>
-      <Grid item className="mt-4">
-        <UploaderComponent />
-      </Grid>
-      {/* End Upload Component */}
+      <ElaborateCauseForm />
 
       {/* Editior Component */}
       <Grid item className={classes.story}>
@@ -107,7 +94,12 @@ const ElaborateCause = () => {
       {/* End Editor Component */}
       <Grid container spacing={3}>
         <Grid item xs={6} sm={6}>
-          <Button fullWidth variant="contained" className={classes.submit}>
+          <Button
+            fullWidth
+            variant="contained"
+            className={classes.submit}
+            onClick={props.prevStep}
+          >
             Back
           </Button>
         </Grid>

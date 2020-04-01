@@ -44,7 +44,7 @@ const campaignOptions = [
   }
 ];
 
-const CampaignFor = () => {
+const CampaignFor = props => {
   const classes = useStyles();
   const [value, setValue] = useState("Myself");
   return (
@@ -70,20 +70,16 @@ const CampaignFor = () => {
       {value == "Project" ? <ProjectForm /> : null}
       {value == "Beneficiary" ? <BeneficiaryForm /> : null}
 
-      <Grid container spacing={3}>
-        <Grid item xs={6} sm={6}>
-          <Button fullWidth variant="contained" className={classes.submit}>
-            Back
-          </Button>
-        </Grid>
+      <Grid container spacing={3} style={{ flexDirection: "row-reverse" }}>
         <Grid item xs={6} sm={6}>
           <Button
             variant="contained"
             color="primary"
             fullWidth
             className={classes.submit}
+            onClick={props.nextStep}
           >
-            Submit
+            Next
           </Button>
         </Grid>
       </Grid>

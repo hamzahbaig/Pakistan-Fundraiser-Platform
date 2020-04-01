@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Zoom from "@material-ui/core/Zoom";
+import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
+
 const useStyles = makeStyles(theme => ({
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -16,6 +18,11 @@ const useStyles = makeStyles(theme => ({
   },
   gender: {
     marginTop: theme.spacing(2)
+  },
+  story: {
+    marginTop: theme.spacing(3),
+    display: "flex",
+    flexDirection: "column"
   }
 }));
 
@@ -33,6 +40,16 @@ const ElaborateCauseForm = () => {
               <TextField fullWidth label="Campaign Title" />
             </Grid>
           </Grid>
+          {/* Upload Component */}
+          <Grid item className={classes.story}>
+            <Typography component="h1" variant="h5">
+              Attach Supporting Documents
+            </Typography>
+          </Grid>
+          <Grid item className="mt-4">
+            <UploaderComponent />
+          </Grid>
+          {/* End Upload Component */}
         </form>
       </Paper>
     </Zoom>

@@ -43,7 +43,7 @@ const causeType = [
   }
 ];
 
-const CauseDetails = () => {
+const CauseDetails = props => {
   const classes = useStyles();
   const [value, setValue] = useState("Education");
   return (
@@ -71,7 +71,12 @@ const CauseDetails = () => {
       <CauseDetailsForm />
       <Grid container spacing={3}>
         <Grid item xs={6} sm={6}>
-          <Button fullWidth variant="contained" className={classes.submit}>
+          <Button
+            fullWidth
+            variant="contained"
+            className={classes.submit}
+            onClick={props.prevStep}
+          >
             Back
           </Button>
         </Grid>
@@ -81,8 +86,9 @@ const CauseDetails = () => {
             color="primary"
             fullWidth
             className={classes.submit}
+            onClick={props.nextStep}
           >
-            Submit
+            Next
           </Button>
         </Grid>
       </Grid>

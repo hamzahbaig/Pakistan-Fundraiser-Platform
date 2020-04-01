@@ -30,7 +30,6 @@ export class UserForm extends Component {
   };
 
   nextStep = () => {
-    console.log("ham,zahh");
     const { step } = this.state;
     this.setState({
       step: step + 1
