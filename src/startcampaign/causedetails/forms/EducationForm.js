@@ -9,6 +9,28 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MaskedInput from "react-text-mask";
 import PropTypes from "prop-types";
+import { Formik } from "formik";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object().shape({
+  schoolName: Yup.string()
+    .min(1, "Must have a character")
+    .max(255, "Must be shorter than 255 characters")
+    .required("Must enter this field"),
+  schoolEmail: Yup.string()
+    .email()
+    .max(255, "Must be shorter than 255 characters")
+    .required("Must enter this field"),
+  schoolId: Yup.string()
+    .min(1, "ID should be greater than 1")
+    .max(120, "ID should be less than 120")
+    .required("Must enter this field"),
+  schoolAddress: Yup.string()
+    .min(5, "Musut be greater than 5 characters")
+    .max(255, "Must be less than 255 characters")
+    .required("Must enter this field"),
+  schoolContact: Yup.string().required("Must enter this field")
+});
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -23,24 +45,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   }
 }));
-
-const friendOptions = [
-  {
-    key: "Male",
-    text: "Male",
-    value: "Male"
-  },
-  {
-    key: "Female",
-    text: "Female",
-    value: "Female"
-  },
-  {
-    key: "Others",
-    text: "Others",
-    value: "Others"
-  }
-];
 
 function contact(props) {
   const { inputRef, ...other } = props;
@@ -82,31 +86,110 @@ contact.propTypes = {
 const EducationForm = () => {
   const classes = useStyles();
   return (
-    <Zoom in={true} >
+    <Zoom in={true}>
       <Paper elevation={5} className={classes.root}>
-        <form className={classes.form} noValidate>
-          <Typography component="h1" variant="h5" className="mb-2">
-            Education Form
-          </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField fullWidth label="School Name" />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField fullWidth label="School Email" />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField fullWidth label="School Address" />
-            </Grid>
-            <Grid item xs={12}>
-              <InputLabel>School Contact</InputLabel>
-              <Input fullWidth inputComponent={contact} />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField fullWidth label="Student ID" />
-            </Grid>
-          </Grid>
-        </form>
+        <Formik
+          initialValues={{
+            schoolName: "",
+            schoolEmail: "",
+            schoolAddress: "",
+            schoolContact: "",
+            schoolId: ""
+          }}
+          validationSchema={validationSchema}
+        >
+          {({ values, errors, touched, handleChange, handleBlur }) => (
+            <form className={classes.form} noValidate>
+              {JSON.stringify(values)}
+              <Typography component="h1" variant="h5" className="mb-2">
+                Education Form
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="School Name"
+                    name="schoolName"
+                    onChange={handleChange}
+                    value={values.schoolName}
+                    onBlur={handleBlur}
+                    error={touched.schoolName && errors.schoolName}
+                    helperText={
+                      touched.schoolName && errors.schoolName
+                        ? errors.schoolName
+                        : null
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="School Email"
+                    name="schoolEmail"
+                    onChange={handleChange}
+                    value={values.schoolEmail}
+                    onBlur={handleBlur}
+                    error={touched.schoolEmail && errors.schoolEmail}
+                    helperText={
+                      touched.schoolEmail && errors.schoolEmail
+                        ? errors.schoolEmail
+                        : null
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="School Address"
+                    name="schoolAddress"
+                    onChange={handleChange}
+                    value={values.schoolAddress}
+                    onBlur={handleBlur}
+                    error={touched.schoolAddress && errors.schoolAddress}
+                    helperText={
+                      touched.schoolAddress && errors.schoolAddress
+                        ? errors.schoolAddress
+                        : null
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputLabel>School Contact</InputLabel>
+                  <Input
+                    fullWidth
+                    inputComponent={contact}
+                    name="schoolContact"
+                    onChange={handleChange}
+                    value={values.schoolContact}
+                    onBlur={handleBlur}
+                    error={touched.schoolContact && errors.schoolContact}
+                    helperText={
+                      touched.schoolContact && errors.schoolContact
+                        ? errors.schoolContact
+                        : null
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Student ID"
+                    name="schoolId"
+                    onChange={handleChange}
+                    value={values.schoolId}
+                    onBlur={handleBlur}
+                    error={touched.schoolId && errors.schoolId}
+                    helperText={
+                      touched.schoolId && errors.schoolId
+                        ? errors.schoolId
+                        : null
+                    }
+                  />
+                </Grid>
+              </Grid>
+            </form>
+          )}
+        </Formik>
       </Paper>
     </Zoom>
   );

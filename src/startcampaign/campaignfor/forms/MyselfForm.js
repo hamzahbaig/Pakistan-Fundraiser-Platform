@@ -40,23 +40,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const friendOptions = [
-  {
-    key: "Male",
-    text: "Male",
-    value: "Male"
-  },
-  {
-    key: "Female",
-    text: "Female",
-    value: "Female"
-  },
-  {
-    key: "Others",
-    text: "Others",
-    value: "Others"
-  }
-];
+
 
 const MyselfForm = () => {
   const classes = useStyles();

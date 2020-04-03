@@ -3,12 +3,10 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MaskedInput from "react-text-mask";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import {
@@ -16,7 +14,15 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import TextField from "@material-ui/core/TextField";
 
+const validationSchema = Yup.object().shape({
+  expiry: Yup.date().required("Must enter this field"),
+  amount: Yup.string().required("Must enter this field"),
+  campaignType: Yup.string().required("Must enter this field")
+});
 const defaultMaskOptions = {
   prefix: "",
   suffix: "",
@@ -47,9 +53,8 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(5),
     padding: theme.spacing(3, 2)
   },
-  gender: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+  date: {
+    marginTop: theme.spacing(-1)
   }
 }));
 
@@ -57,45 +62,89 @@ const CauseDetailsForm = () => {
   const classes = useStyles();
   return (
     <Paper elevation={5} className={classes.root}>
-      <form className={classes.form} noValidate>
-        <Typography component="h1" variant="h5" className="mb-3">
-          Cause Details Form
-        </Typography>
-        <FormControl className={classes.form} >
-          <Grid item xs={12}>
-            <InputLabel>Campaign Type</InputLabel>
-            <Select fullWidth>
-              <MenuItem value={"Fixed"}>Fixed</MenuItem>
-              <MenuItem value={"Flexible"}>Flexible</MenuItem>
-            </Select>
-          </Grid>
-        </FormControl>
-        <FormControl className="mt-4" fullWidth>
-          <Grid item xs={12}>
-            <InputLabel>Amount</InputLabel>
-            <Input
-              fullWidth
-              id="standard-adornment-amount"
-              startAdornment={
-                <InputAdornment position="start">Rs</InputAdornment>
-              }
-              inputComponent={CurrencyInput}
-            />
-          </Grid>
-        </FormControl>
-        <FormControl className="mt-3" fullWidth>
-          <Grid item xs={12}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                margin="normal"
-                format="MM/dd/yyyy"
-                fullWidth
-                label="Campaign Expiry Date"
-              />
-            </MuiPickersUtilsProvider>
-          </Grid>
-        </FormControl>
-      </form>
+      <Formik
+        initialValues={{
+          campaignType: "",
+          amount: "",
+          expiry: new Date()
+        }}
+        validationSchema={validationSchema}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          setFieldValue
+        }) => (
+          <form className={classes.form} noValidate>
+            {JSON.stringify(values)}
+            <Typography component="h1" variant="h5" className="mb-3">
+              Cause Details Form
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <InputLabel>Campaign Type</InputLabel>
+                <Select
+                  fullWidth
+                  name="campaignType"
+                  onChange={handleChange}
+                  value={values.campaignType}
+                  onBlur={handleBlur}
+                  error={touched.campaignType && errors.campaignType}
+                  helperText={
+                    touched.campaignType && errors.campaignType
+                      ? errors.campaignType
+                      : null
+                  }
+                >
+                  <MenuItem value={"Fixed"}>Fixed</MenuItem>
+                  <MenuItem value={"Flexible"}>Flexible</MenuItem>
+                </Select>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Amount"
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">Rs</InputAdornment>
+                    ),
+                    inputComponent: CurrencyInput
+                  }}
+                  name="amount"
+                  onChange={handleChange}
+                  value={values.amount}
+                  onBlur={handleBlur}
+                  error={touched.amount && errors.amount}
+                  helperText={
+                    touched.amount && errors.amount ? errors.amount : null
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} className={classes.date}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    margin="normal"
+                    format="MM/dd/yyyy"
+                    fullWidth
+                    label="Campaign Expiry Date"
+                    name="expiry"
+                    onChange={val => setFieldValue("expiry", val)}
+                    value={values.expiry}
+                    onBlur={handleBlur}
+                    error={touched.expiry && errors.expiry}
+                    helperText={
+                      touched.expiry && errors.expiry ? errors.expiry : null
+                    }
+                  />
+                </MuiPickersUtilsProvider>
+              </Grid>
+            </Grid>
+          </form>
+        )}
+      </Formik>
     </Paper>
   );
 };
