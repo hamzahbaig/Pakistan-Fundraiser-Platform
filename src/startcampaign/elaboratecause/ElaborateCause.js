@@ -8,7 +8,7 @@ import Container from "@material-ui/core/Container";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ElaborateCauseForm from "./forms/ElaborateCauseForm";
-import {ProgressBar} from "react-bootstrap"
+import { ProgressBar } from "react-bootstrap";
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -95,7 +95,7 @@ const ElaborateCause = props => {
       <Grid item className={classes.submit}>
         <ProgressBar
           now={props.step}
-          label={`${props.step*20}%`}
+          label={`${props.step * 20}%`}
           style={{ height: 25 }}
           min={0}
           max={4}

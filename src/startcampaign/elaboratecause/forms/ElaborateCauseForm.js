@@ -6,6 +6,15 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Zoom from "@material-ui/core/Zoom";
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
+import { Formik } from "formik";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object().shape({
+  campaignTitle: Yup.string()
+    .min(1, "Must have a character")
+    .max(255, "Must be shorter than 255 characters")
+    .required("Must enter this field")
+});
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -31,26 +40,46 @@ const ElaborateCauseForm = () => {
   return (
     <Zoom in={true}>
       <Paper elevation={5} className={classes.root}>
-        <form className={classes.form} noValidate>
-          <Typography component="h1" variant="h5" className="mb-2">
-            Elaborate Cause Details Form
-          </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField fullWidth label="Campaign Title" />
-            </Grid>
-          </Grid>
-          {/* Upload Component */}
-          <Grid item className={classes.story}>
-            <Typography component="h1" variant="h5">
-              Attach Supporting Documents
-            </Typography>
-          </Grid>
-          <Grid item className="mt-4">
-            <UploaderComponent />
-          </Grid>
-          {/* End Upload Component */}
-        </form>
+        <Formik
+          initialValues={{ campaignTitle: "" }}
+          validationSchema={validationSchema}
+        >
+          {({ values, errors, touched, handleChange, handleBlur }) => (
+            <form className={classes.form} noValidate>
+              <Typography component="h1" variant="h5" className="mb-2">
+                Elaborate Cause Details Form
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Campaign Title"
+                    name="campaignTitle"
+                    onChange={handleChange}
+                    value={values.campaignTitle}
+                    onBlur={handleBlur}
+                    error={touched.campaignTitle && errors.campaignTitle}
+                    helperText={
+                      touched.campaignTitle && errors.campaignTitle
+                        ? errors.campaignTitle
+                        : null
+                    }
+                  />
+                </Grid>
+              </Grid>
+              {/* Upload Component */}
+              <Grid item className={classes.story}>
+                <Typography component="h1" variant="h5">
+                  Attach Supporting Documents
+                </Typography>
+              </Grid>
+              <Grid item className="mt-4">
+                <UploaderComponent />
+              </Grid>
+              {/* End Upload Component */}
+            </form>
+          )}
+        </Formik>
       </Paper>
     </Zoom>
   );
