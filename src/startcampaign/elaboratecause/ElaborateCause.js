@@ -134,8 +134,10 @@ const ElaborateCauseFormik = withFormik({
         "<p>Write your story. Keep it simple, personal, and about the specific use of funds.</p></br></br><p>Write About: Who is this campaign for? When do you need funds? How do you plan to use the funds</p>"
     };
   },
-  handleSubmit(values) {
-    console.log(values, "SUBMITEED");
+  handleSubmit(values,props) {
+    setTimeout(() => {
+      console.log(values, "SUBMITEED");
+    }, 500);
   },
   validationSchema: Yup.object().shape({
     campaignTitle: Yup.string()

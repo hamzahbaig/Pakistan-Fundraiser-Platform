@@ -91,7 +91,7 @@ const CampaignFor = props => {
             color="primary"
             fullWidth
             className={classes.submit}
-            onClick={props.nextStep}
+            onClick={props.handleSubmit}
           >
             Next
           </Button>
@@ -128,8 +128,11 @@ const CampaignForFormik = withFormik({
       beneficiaryContact: "+92-   -       "
     };
   },
-  handleSubmit(values) {
-    console.log(values, "SUBMITEED");
+  handleSubmit(values, props) {
+    setTimeout(() => {
+      console.log(values, "SUBMITEED");
+      props.props.nextStep();
+    }, 500);
   },
   validationSchema(props) {
     if (props.campaignFor == "Myself") {
