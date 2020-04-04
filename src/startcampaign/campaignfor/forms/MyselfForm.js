@@ -42,7 +42,7 @@ const MyselfForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.myselfFirstName}
                 onBlur={handleBlur}
-                error={touched.myselfFirstName && errors.myselfFirstName}
+                error={touched.myselfFirstName && errors.myselfFirstName ? true : false}
                 helperText={
                   touched.myselfFirstName && errors.myselfFirstName
                     ? errors.myselfFirstName
@@ -58,7 +58,9 @@ const MyselfForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.myselfLastName}
                 onBlur={handleBlur}
-                error={touched.myselfLastName && errors.myselfLastName}
+                error={
+                  touched.myselfLastName && errors.myselfLastName ? true : false
+                }
                 helperText={
                   touched.myselfLastName && errors.myselfLastName
                     ? errors.myselfLastName
@@ -75,7 +77,7 @@ const MyselfForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.myselfAge}
                 onBlur={handleBlur}
-                error={touched.myselfAge && errors.myselfAge}
+                error={touched.myselfAge && errors.myselfAge ? true : false}
                 helperText={
                   touched.myselfAge && errors.myselfAge
                     ? errors.myselfAge
@@ -91,11 +93,8 @@ const MyselfForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.myselfGender}
                 onBlur={handleBlur}
-                error={touched.myselfGender && errors.myselfGender}
-                helperText={
-                  touched.myselfGender && errors.myselfGender
-                    ? errors.myselfGender
-                    : null
+                error={
+                  touched.myselfGender && errors.myselfGender ? true : false
                 }
               >
                 <MenuItem value={"Male"}>Male</MenuItem>

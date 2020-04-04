@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import CampaignFor from "./campaignfor/CampaignFor";
 import CauseDetails from "./causedetails/CauseDetails";
-
 import ElaborateCause from "./elaboratecause/ElaborateCause";
+
 export class StartCampaign extends Component {
   state = {
-    step: 1
+    step: 1,
+    campaignFor: "Myself"
+  };
+
+  setCampaignFor = value => {
+    this.setState({ campaignFor: value });
   };
 
   nextStep = () => {
@@ -24,9 +29,17 @@ export class StartCampaign extends Component {
 
   render() {
     const { step } = this.state;
+
     switch (step) {
       case 1:
-        return <CampaignFor nextStep={this.nextStep} step={this.state.step} />;
+        return (
+          <CampaignFor
+            nextStep={this.nextStep}
+            step={this.state.step}
+            campaignFor={this.state.campaignFor}
+            setCampaignFor={this.setCampaignFor}
+          />
+        );
       case 2:
         return (
           <CauseDetails
