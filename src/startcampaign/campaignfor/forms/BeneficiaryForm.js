@@ -14,28 +14,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-const validationSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(1, "Must have a character")
-    .max(255, "Must be shorter than 255 characters")
-    .required("Must enter this field"),
-  lastName: Yup.string()
-    .min(1, "Must have a character")
-    .max(255, "Must be shorter than 255 characters")
-    .required("Must enter this field"),
-  age: Yup.number()
-    .min(1, "Age should be greater than 1")
-    .max(120, "Age should be less than 120")
-    .required("Must enter this field"),
-  gender: Yup.string().required("Must enter this field"),
-  address: Yup.string()
-    .min(5, "Musut be greater than 5 characters")
-    .max(255, "Must be less than 255 characters")
-    .required("Must enter this field"),
-  cnic: Yup.string().required("Must enter this field"),
-  contact: Yup.string().required("Must enter this field")
-});
-
 const useStyles = makeStyles(theme => ({
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -61,12 +39,10 @@ function contact(props) {
         inputRef(ref ? ref.inputElement : null);
       }}
       mask={[
-        "(",
         "+",
         9,
         2,
-        ")",
-        " ",
+        "-",
         /\d/,
         /\d/,
         /\d/,
@@ -124,143 +100,143 @@ function cnic(props) {
 cnic.propTypes = {
   inputRef: PropTypes.func.isRequired
 };
-const BeneficiaryForm = () => {
+const BeneficiaryForm = ({ props }) => {
   const classes = useStyles();
+  const { values, errors, touched, handleChange, handleBlur } = props;
   return (
     <Zoom in={true}>
       <Paper elevation={5} className={classes.root}>
-        <Formik
-          initialValues={{
-            firstName: "",
-            lastName: "",
-            age: "",
-            gender: "",
-            address: "",
-            contact: "",
-            cnic: ""
-          }}
-          validationSchema={validationSchema}
-        >
-          {({ values, errors, touched, handleChange, handleBlur }) => (
-            <form className={classes.form} noValidate>
-              {JSON.stringify(values)}
+        <form className={classes.form} noValidate>
+          <Typography component="h1" variant="h5" className="mb-2">
+            Beneficiary Form
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="First Name"
+                name="beneficiaryFirstName"
+                onChange={handleChange}
+                value={values.beneficiaryFirstName}
+                onBlur={handleBlur}
+                error={
+                  touched.beneficiaryFirstName && errors.beneficiaryFirstName
+                }
+                helperText={
+                  touched.beneficiaryFirstName && errors.beneficiaryFirstName
+                    ? errors.beneficiaryFirstName
+                    : null
+                }
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Last Name"
+                name="beneficiaryLastName"
+                onChange={handleChange}
+                value={values.beneficiaryLastName}
+                onBlur={handleBlur}
+                error={
+                  touched.beneficiaryLastName && errors.beneficiaryLastName
+                }
+                helperText={
+                  touched.beneficiaryLastName && errors.beneficiaryLastName
+                    ? errors.beneficiaryLastName
+                    : null
+                }
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                type="number"
+                fullWidth
+                label="Age"
+                name="beneficiaryAge"
+                onChange={handleChange}
+                value={values.beneficiaryAge}
+                onBlur={handleBlur}
+                error={touched.beneficiaryAge && errors.beneficiaryAge}
+                helperText={
+                  touched.beneficiaryAge && errors.beneficiaryAge
+                    ? errors.beneficiaryAge
+                    : null
+                }
+              />
+            </Grid>
 
-              <Typography component="h1" variant="h5" className="mb-2">
-                Beneficiary Form
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="First Name"
-                    name="firstName"
-                    onChange={handleChange}
-                    value={values.firstName}
-                    onBlur={handleBlur}
-                    error={touched.firstName && errors.firstName}
-                    helperText={
-                      touched.firstName && errors.firstName
-                        ? errors.firstName
-                        : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    label="Last Name"
-                    name="lastName"
-                    onChange={handleChange}
-                    value={values.lastName}
-                    onBlur={handleBlur}
-                    error={touched.lastName && errors.lastName}
-                    helperText={
-                      touched.lastName && errors.lastName
-                        ? errors.lastName
-                        : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    type="number"
-                    fullWidth
-                    label="Age"
-                    name="age"
-                    onChange={handleChange}
-                    value={values.age}
-                    onBlur={handleBlur}
-                    error={touched.age && errors.age}
-                    helperText={touched.age && errors.age ? errors.age : null}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Address"
-                    name="address"
-                    onChange={handleChange}
-                    value={values.address}
-                    onBlur={handleBlur}
-                    error={touched.address && errors.address}
-                    helperText={
-                      touched.address && errors.address ? errors.address : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12} className="mt-2">
-                  <InputLabel>Gender</InputLabel>
-                  <Select
-                    fullWidth
-                    name="gender"
-                    onChange={handleChange}
-                    value={values.gender}
-                    onBlur={handleBlur}
-                    error={touched.gender && errors.gender}
-                    helperText={
-                      touched.gender && errors.gender ? errors.gender : null
-                    }
-                  >
-                    <MenuItem value={"Male"}>Male</MenuItem>
-                    <MenuItem value={"Female"}>Female</MenuItem>
-                    <MenuItem value={"Other"}>Other</MenuItem>
-                  </Select>
-                </Grid>
-                <Grid item xs={12}>
-                  <InputLabel>Contact</InputLabel>
-                  <Input
-                    fullWidth
-                    name="contact"
-                    inputComponent={contact}
-                    onChange={handleChange}
-                    value={values.contact}
-                    onBlur={handleBlur}
-                    error={touched.contact && errors.contact}
-                    helperText={
-                      touched.contact && errors.contact ? errors.contact : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <InputLabel>CNIC</InputLabel>
-                  <Input
-                    fullWidth
-                    name="cnic"
-                    inputComponent={cnic}
-                    onChange={handleChange}
-                    value={values.cnic}
-                    onBlur={handleBlur}
-                    error={touched.cnic && errors.cnic}
-                    helperText={
-                      touched.cnic && errors.cnic ? errors.cnic : null
-                    }
-                  />
-                </Grid>
-              </Grid>
-            </form>
-          )}
-        </Formik>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Address"
+                name="beneficiaryAddress"
+                onChange={handleChange}
+                value={values.beneficiaryAddress}
+                onBlur={handleBlur}
+                error={touched.beneficiaryAddress && errors.beneficiaryAddress}
+                helperText={
+                  touched.beneficiaryAddress && errors.beneficiaryAddress
+                    ? errors.beneficiaryAddress
+                    : null
+                }
+              />
+            </Grid>
+            <Grid item xs={12} className="mt-2">
+              <InputLabel>Gender</InputLabel>
+              <Select
+                fullWidth
+                name="beneficiaryGender"
+                onChange={handleChange}
+                value={values.beneficiaryGender}
+                onBlur={handleBlur}
+                error={touched.beneficiaryGender && errors.beneficiaryGender}
+                helperText={
+                  touched.beneficiaryGender && errors.beneficiaryGender
+                    ? errors.beneficiaryGender
+                    : null
+                }
+              >
+                <MenuItem value={"Male"}>Male</MenuItem>
+                <MenuItem value={"Female"}>Female</MenuItem>
+                <MenuItem value={"Other"}>Other</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item xs={12}>
+              <InputLabel>Contact</InputLabel>
+              <Input
+                fullWidth
+                name="beneficiaryContact"
+                inputComponent={contact}
+                onChange={handleChange}
+                value={values.beneficiaryContact}
+                onBlur={handleBlur}
+                error={touched.beneficiaryContact && errors.beneficiaryContact}
+                helperText={
+                  touched.beneficiaryContact && errors.beneficiaryContact
+                    ? errors.beneficiaryContact
+                    : null
+                }
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputLabel>CNIC</InputLabel>
+              <Input
+                fullWidth
+                name="beneficiaryCnic"
+                inputComponent={cnic}
+                onChange={handleChange}
+                value={values.beneficiaryCnic}
+                onBlur={handleBlur}
+                error={touched.beneficiaryCnic && errors.beneficiaryCnic}
+                helperText={
+                  touched.beneficiaryCnic && errors.beneficiaryCnic
+                    ? errors.beneficiaryCnic
+                    : null
+                }
+              />
+            </Grid>
+          </Grid>
+        </form>
       </Paper>
     </Zoom>
   );

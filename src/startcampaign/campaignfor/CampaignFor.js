@@ -10,6 +10,8 @@ import MyselfForm from "./forms/MyselfForm";
 import ProjectForm from "./forms/ProjectForm";
 import BeneficiaryForm from "./forms/BeneficiaryForm";
 import { ProgressBar } from "react-bootstrap";
+import { withFormik } from "formik";
+import * as Yup from "yup";
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -49,6 +51,7 @@ const CampaignFor = props => {
   const [value, setValue] = useState("Myself");
   return (
     <Container component="main" maxWidth="xs">
+      {JSON.stringify(props.values)}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}></Avatar>
         <Typography component="h1" variant="h5">
@@ -66,13 +69,13 @@ const CampaignFor = props => {
           />
         </span>
       </div>
-      {value == "Myself" ? <MyselfForm /> : null}
-      {value == "Project" ? <ProjectForm /> : null}
-      {value == "Beneficiary" ? <BeneficiaryForm /> : null}
+      {value == "Myself" ? <MyselfForm props={props} /> : null}
+      {value == "Project" ? <ProjectForm props={props} /> : null}
+      {value == "Beneficiary" ? <BeneficiaryForm props={props} /> : null}
       <Grid item className={classes.submit}>
         <ProgressBar
           now={props.step}
-          label={`${props.step*20}%`}
+          label={`${props.step * 20}%`}
           style={{ height: 25 }}
           min={0}
           max={4}
@@ -95,4 +98,88 @@ const CampaignFor = props => {
   );
 };
 
-export default CampaignFor;
+const phoneRegExp = /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/;
+
+const cnicRegExp = /^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$/;
+
+const CampaignForFormik = withFormik({
+  mapPropsToValues() {
+    return {
+      myselfFirstName: "",
+      myselfLastName: "",
+      myselfAge: "",
+      myselfGender: "",
+
+      projectOrganiserName: "",
+      projectOrganiserAddress: "",
+      projectOrganiserGender: "",
+      projectOrganiserContact: "+92-   -       ",
+      projectOrganiserCnic: "     -       - ",
+
+      beneficiaryFirstName: "",
+      beneficiaryLastName: "",
+      beneficiaryAge: "",
+      beneficiaryGender: "",
+      beneficiaryCnic: "     -       - ",
+      beneficiaryAddress: "",
+      beneficiaryContact: "+92-   -       "
+    };
+  },
+  validationSchema: Yup.object().shape({
+    myselfFirstName: Yup.string()
+      .min(1, "Must have a character")
+      .max(255, "Must be shorter than 255 characters")
+      .required("Must enter this field"),
+    myselfLastName: Yup.string()
+      .min(1, "Must have a character")
+      .max(255, "Must be shorter than 255 characters")
+      .required("Must enter this field"),
+    myselfAge: Yup.number()
+      .positive()
+      .min(1, "Age should be greater than 1")
+      .max(120, "Age should be less than 120")
+      .required("Must enter this field"),
+    myselfGender: Yup.string().required("Must enter this field"),
+
+    projectOrganiserName: Yup.string()
+      .min(1, "Must have a character")
+      .max(255, "Must be shorter than 255 characters")
+      .required("Must enter this field"),
+    projectOrganiserAddress: Yup.string()
+      .min(5, "Musut be greater than 5 characters")
+      .max(255, "Must be less than 255 characters")
+      .required("Must enter this field"),
+    projectOrganiserCnic: Yup.string().matches(cnicRegExp, "CNIC is not valid"),
+    projectOrganiserContact: Yup.string().matches(
+      phoneRegExp,
+      "Phone number is not valid"
+    ),
+    projectOrganiserGender: Yup.string().required("Must enter this field"),
+
+    beneficiaryFirstName: Yup.string()
+      .min(1, "Must have a character")
+      .max(255, "Must be shorter than 255 characters")
+      .required("Must enter this field"),
+    beneficiaryLastName: Yup.string()
+      .min(1, "Must have a character")
+      .max(255, "Must be shorter than 255 characters")
+      .required("Must enter this field"),
+    beneficiaryAge: Yup.number()
+      .positive()
+      .min(1, "Age should be greater than 1")
+      .max(120, "Age should be less than 120")
+      .required("Must enter this field"),
+    beneficiaryGender: Yup.string().required("Must enter this field"),
+    beneficiaryAddress: Yup.string()
+      .min(5, "Musut be greater than 5 characters")
+      .max(255, "Must be less than 255 characters")
+      .required("Must enter this field"),
+    beneficiaryCnic: Yup.string().matches(cnicRegExp, "CNIC is not valid"),
+    beneficiaryContact: Yup.string().matches(
+      phoneRegExp,
+      "Phone number is not valid"
+    ),
+  })
+})(CampaignFor);
+
+export default CampaignForFormik;

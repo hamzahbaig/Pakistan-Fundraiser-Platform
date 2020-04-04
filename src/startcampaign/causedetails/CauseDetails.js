@@ -10,6 +10,8 @@ import CauseDetailsForm from "./forms/CauseDetailsForm";
 import EducationForm from "./forms/EducationForm";
 import HealthForm from "./forms/HealthForm";
 import { ProgressBar } from "react-bootstrap";
+import { withFormik } from "formik";
+import * as Yup from "yup";
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -49,6 +51,7 @@ const CauseDetails = props => {
   const [value, setValue] = useState("Education");
   return (
     <Container component="main" maxWidth="xs">
+      {JSON.stringify(props.values)}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}></Avatar>
         <Typography component="h1" variant="h5">
@@ -67,15 +70,15 @@ const CauseDetails = props => {
           cause
         </span>
       </div>
-      {value == "Education" ? <EducationForm /> : null}
-      {value == "Health" ? <HealthForm /> : null}
+      {value == "Education" ? <EducationForm props={props} /> : null}
+      {value == "Health" ? <HealthForm props={props} /> : null}
 
-      <CauseDetailsForm />
+      <CauseDetailsForm props={props} />
 
       <Grid item className={classes.submit}>
         <ProgressBar
           now={props.step}
-          label={`${props.step*20}%`}
+          label={`${props.step * 20}%`}
           style={{ height: 25 }}
           min={0}
           max={4}
@@ -108,4 +111,76 @@ const CauseDetails = props => {
   );
 };
 
-export default CauseDetails;
+const phoneRegExp = /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/;
+
+const ammountRegex = /^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(\.[0-9][0-9])?$/;
+
+const CauseDetailsFormik = withFormik({
+  mapPropsToValues() {
+    return {
+      campaignType: "",
+      amount: "",
+      expiry: new Date(),
+      schoolName: "",
+      schoolEmail: "",
+      schoolAddress: "",
+      schoolContact: "+92-   -       ",
+      schoolId: "",
+      hospital: false,
+      hospitalName: "",
+      hospitalEmail: "",
+      hospitalAddress: "",
+      hospitalContact: "+92-   -       ",
+      patientId: ""
+    };
+  },
+  validationSchema: Yup.object().shape({
+    expiry: Yup.date().required("Must enter this field"),
+    amount: Yup.string()
+      .matches(ammountRegex, "Invalid Amount")
+      .required("Must enter this field"),
+    campaignType: Yup.string().required("Must enter this field"),
+    schoolName: Yup.string()
+      .min(1, "Must have a character")
+      .max(255, "Must be shorter than 255 characters")
+      .required("Must enter this field"),
+    schoolEmail: Yup.string()
+      .email()
+      .max(255, "Must be shorter than 255 characters")
+      .required("Must enter this field"),
+    schoolId: Yup.string()
+      .min(1, "ID should be greater than 1")
+      .max(120, "ID should be less than 120")
+      .required("Must enter this field"),
+    schoolAddress: Yup.string()
+      .min(5, "Musut be greater than 5 characters")
+      .max(255, "Must be less than 255 characters")
+      .required("Must enter this field"),
+    schoolContact: Yup.string().matches(
+      phoneRegExp,
+      "Phone number is not valid"
+    ),
+    hospitalName: Yup.string()
+      .min(1, "Must have a character")
+      .max(255, "Must be shorter than 255 characters")
+      .required("Must enter this field"),
+    hospitalEmail: Yup.string()
+      .email()
+      .max(255, "Must be shorter than 255 characters")
+      .required("Must enter this field"),
+    hospitalAddress: Yup.string()
+      .min(5, "Musut be greater than 5 characters")
+      .max(255, "Must be less than 255 characters")
+      .required("Must enter this field"),
+    hospitalContact: Yup.string().matches(
+      phoneRegExp,
+      "Phone number is not valid"
+    ),
+    patientId: Yup.string()
+      .min(1, "ID should be greater than 1")
+      .max(120, "ID should be less than 120")
+      .required("Must enter this field")
+  })
+})(CauseDetails);
+
+export default CauseDetailsFormik;
