@@ -121,6 +121,8 @@ const BeneficiaryForm = ({ props }) => {
                 onBlur={handleBlur}
                 error={
                   touched.beneficiaryFirstName && errors.beneficiaryFirstName
+                    ? true
+                    : false
                 }
                 helperText={
                   touched.beneficiaryFirstName && errors.beneficiaryFirstName
@@ -139,6 +141,8 @@ const BeneficiaryForm = ({ props }) => {
                 onBlur={handleBlur}
                 error={
                   touched.beneficiaryLastName && errors.beneficiaryLastName
+                    ? true
+                    : false
                 }
                 helperText={
                   touched.beneficiaryLastName && errors.beneficiaryLastName
@@ -156,7 +160,9 @@ const BeneficiaryForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.beneficiaryAge}
                 onBlur={handleBlur}
-                error={touched.beneficiaryAge && errors.beneficiaryAge}
+                error={
+                  touched.beneficiaryAge && errors.beneficiaryAge ? true : false
+                }
                 helperText={
                   touched.beneficiaryAge && errors.beneficiaryAge
                     ? errors.beneficiaryAge
@@ -173,7 +179,11 @@ const BeneficiaryForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.beneficiaryAddress}
                 onBlur={handleBlur}
-                error={touched.beneficiaryAddress && errors.beneficiaryAddress}
+                error={
+                  touched.beneficiaryAddress && errors.beneficiaryAddress
+                    ? true
+                    : false
+                }
                 helperText={
                   touched.beneficiaryAddress && errors.beneficiaryAddress
                     ? errors.beneficiaryAddress
@@ -189,11 +199,10 @@ const BeneficiaryForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.beneficiaryGender}
                 onBlur={handleBlur}
-                error={touched.beneficiaryGender && errors.beneficiaryGender}
-                helperText={
+                error={
                   touched.beneficiaryGender && errors.beneficiaryGender
-                    ? errors.beneficiaryGender
-                    : null
+                    ? true
+                    : false
                 }
               >
                 <MenuItem value={"Male"}>Male</MenuItem>
@@ -210,11 +219,10 @@ const BeneficiaryForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.beneficiaryContact}
                 onBlur={handleBlur}
-                error={touched.beneficiaryContact && errors.beneficiaryContact}
-                helperText={
+                error={
                   touched.beneficiaryContact && errors.beneficiaryContact
-                    ? errors.beneficiaryContact
-                    : null
+                    ? true
+                    : false
                 }
               />
             </Grid>
@@ -227,11 +235,10 @@ const BeneficiaryForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.beneficiaryCnic}
                 onBlur={handleBlur}
-                error={touched.beneficiaryCnic && errors.beneficiaryCnic}
-                helperText={
+                error={
                   touched.beneficiaryCnic && errors.beneficiaryCnic
-                    ? errors.beneficiaryCnic
-                    : null
+                    ? true
+                    : false
                 }
               />
             </Grid>

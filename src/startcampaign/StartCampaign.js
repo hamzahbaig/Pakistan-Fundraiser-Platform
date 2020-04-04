@@ -6,11 +6,16 @@ import ElaborateCause from "./elaboratecause/ElaborateCause";
 export class StartCampaign extends Component {
   state = {
     step: 1,
-    campaignFor: "Myself"
+    campaignFor: "Myself",
+    causeDetails: "Education"
   };
 
   setCampaignFor = value => {
     this.setState({ campaignFor: value });
+  };
+
+  setCauseDetails = value => {
+    this.setState({ causeDetails: value });
   };
 
   nextStep = () => {
@@ -46,6 +51,8 @@ export class StartCampaign extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             step={this.state.step}
+            causeDetails={this.state.causeDetails}
+            setCauseDetails={this.setCauseDetails}
           />
         );
       case 3:

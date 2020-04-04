@@ -120,6 +120,8 @@ const ProjectForm = ({ props }) => {
                 onBlur={handleBlur}
                 error={
                   touched.projectOrganiserName && errors.projectOrganiserName
+                    ? true
+                    : false
                 }
                 helperText={
                   touched.projectOrganiserName && errors.projectOrganiserName
@@ -139,6 +141,8 @@ const ProjectForm = ({ props }) => {
                 error={
                   touched.projectOrganiserAddress &&
                   errors.projectOrganiserAddress
+                    ? true
+                    : false
                 }
                 helperText={
                   touched.projectOrganiserAddress &&
@@ -159,12 +163,8 @@ const ProjectForm = ({ props }) => {
                 error={
                   touched.projectOrganiserGender &&
                   errors.projectOrganiserGender
-                }
-                helperText={
-                  touched.projectOrganiserGender &&
-                  errors.projectOrganiserGender
-                    ? errors.projectOrganiserGender
-                    : null
+                    ? true
+                    : false
                 }
               >
                 <MenuItem value={"Male"}>Male</MenuItem>
@@ -184,12 +184,8 @@ const ProjectForm = ({ props }) => {
                 error={
                   touched.projectOrganiserContact &&
                   errors.projectOrganiserContact
-                }
-                helperText={
-                  touched.projectOrganiserContact &&
-                  errors.projectOrganiserContact
-                    ? errors.projectOrganiserContact
-                    : null
+                    ? true
+                    : false
                 }
               />
             </Grid>
@@ -204,11 +200,8 @@ const ProjectForm = ({ props }) => {
                 onBlur={handleBlur}
                 error={
                   touched.projectOrganiserCnic && errors.projectOrganiserCnic
-                }
-                helperText={
-                  touched.projectOrganiserCnic && errors.projectOrganiserCnic
-                    ? errors.projectOrganiserCnic
-                    : null
+                    ? true
+                    : false
                 }
               />
             </Grid>

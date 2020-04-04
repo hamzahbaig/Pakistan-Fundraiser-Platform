@@ -49,7 +49,6 @@ const causeType = [
 
 const CauseDetails = props => {
   const classes = useStyles();
-  const [value, setValue] = useState("Education");
   return (
     <Container component="main" maxWidth="xs">
       {JSON.stringify(props.values)}
@@ -64,15 +63,17 @@ const CauseDetails = props => {
             inline
             options={causeType}
             onChange={(e, { value }) => {
-              setValue(value);
+              props.setCauseDetails(value);
             }}
-            value={value}
+            value={props.causeDetails}
           />{" "}
           cause
         </span>
       </div>
-      {value == "Education" ? <EducationForm props={props} /> : null}
-      {value == "Health" ? <HealthForm props={props} /> : null}
+      {props.causeDetails == "Education" ? (
+        <EducationForm props={props} />
+      ) : null}
+      {props.causeDetails == "Health" ? <HealthForm props={props} /> : null}
 
       <CauseDetailsForm props={props} />
 
@@ -128,7 +129,7 @@ const CauseDetailsFormik = withFormik({
       schoolAddress: "",
       schoolContact: "+92-   -       ",
       schoolId: "",
-      
+
       hospital: false,
       hospitalName: "",
       hospitalEmail: "",
@@ -137,53 +138,76 @@ const CauseDetailsFormik = withFormik({
       patientId: ""
     };
   },
-  validationSchema: Yup.object().shape({
-    expiry: Yup.date().required("Must enter this field"),
-    amount: Yup.string()
-      .matches(ammountRegex, "Invalid Amount")
-      .required("Must enter this field"),
-    campaignType: Yup.string().required("Must enter this field"),
-    schoolName: Yup.string()
-      .min(1, "Must have a character")
-      .max(255, "Must be shorter than 255 characters")
-      .required("Must enter this field"),
-    schoolEmail: Yup.string()
-      .email()
-      .max(255, "Must be shorter than 255 characters")
-      .required("Must enter this field"),
-    schoolId: Yup.string()
-      .min(1, "ID should be greater than 1")
-      .max(120, "ID should be less than 120")
-      .required("Must enter this field"),
-    schoolAddress: Yup.string()
-      .min(5, "Musut be greater than 5 characters")
-      .max(255, "Must be less than 255 characters")
-      .required("Must enter this field"),
-    schoolContact: Yup.string().matches(
-      phoneRegExp,
-      "Phone number is not valid"
-    ),
-    hospitalName: Yup.string()
-      .min(1, "Must have a character")
-      .max(255, "Must be shorter than 255 characters")
-      .required("Must enter this field"),
-    hospitalEmail: Yup.string()
-      .email()
-      .max(255, "Must be shorter than 255 characters")
-      .required("Must enter this field"),
-    hospitalAddress: Yup.string()
-      .min(5, "Musut be greater than 5 characters")
-      .max(255, "Must be less than 255 characters")
-      .required("Must enter this field"),
-    hospitalContact: Yup.string().matches(
-      phoneRegExp,
-      "Phone number is not valid"
-    ),
-    patientId: Yup.string()
-      .min(1, "ID should be greater than 1")
-      .max(120, "ID should be less than 120")
-      .required("Must enter this field")
-  })
+  handleSubmit(values) {
+    console.log(values, "SUBMITEED");
+  },
+  validationSchema(props) {
+    if (props.causeDetails == "Education") {
+      return Yup.object().shape({
+        expiry: Yup.date().required("Must enter this field"),
+        amount: Yup.string()
+          .matches(ammountRegex, "Invalid Amount")
+          .required("Must enter this field"),
+        campaignType: Yup.string().required("Must enter this field"),
+        schoolName: Yup.string()
+          .min(1, "Must have a character")
+          .max(255, "Must be shorter than 255 characters")
+          .required("Must enter this field"),
+        schoolEmail: Yup.string()
+          .email()
+          .max(255, "Must be shorter than 255 characters")
+          .required("Must enter this field"),
+        schoolId: Yup.string()
+          .min(1, "ID should be greater than 1")
+          .max(120, "ID should be less than 120")
+          .required("Must enter this field"),
+        schoolAddress: Yup.string()
+          .min(5, "Musut be greater than 5 characters")
+          .max(255, "Must be less than 255 characters")
+          .required("Must enter this field"),
+        schoolContact: Yup.string().matches(
+          phoneRegExp,
+          "Phone number is not valid"
+        )
+      });
+    } else if (props.causeDetails == "Health") {
+      return Yup.object().shape({
+        expiry: Yup.date().required("Must enter this field"),
+        amount: Yup.string()
+          .matches(ammountRegex, "Invalid Amount")
+          .required("Must enter this field"),
+        campaignType: Yup.string().required("Must enter this field"),
+        hospitalName: Yup.string()
+          .min(1, "Must have a character")
+          .max(255, "Must be shorter than 255 characters")
+          .required("Must enter this field"),
+        hospitalEmail: Yup.string()
+          .email()
+          .max(255, "Must be shorter than 255 characters")
+          .required("Must enter this field"),
+        hospitalAddress: Yup.string()
+          .min(5, "Musut be greater than 5 characters")
+          .max(255, "Must be less than 255 characters")
+          .required("Must enter this field"),
+        hospitalContact: Yup.string().matches(
+          phoneRegExp,
+          "Phone number is not valid"
+        ),
+        patientId: Yup.string()
+          .min(1, "ID should be greater than 1")
+          .max(120, "ID should be less than 120")
+          .required("Must enter this field")
+      });
+    } else if (props.causeDetails == "Other") {
+      return Yup.object().shape({
+        expiry: Yup.date().required("Must enter this field"),
+        amount: Yup.string()
+          .matches(ammountRegex, "Invalid Amount")
+          .required("Must enter this field"),
+        campaignType: Yup.string().required("Must enter this field")
+      });
+    }
+  }
 })(CauseDetails);
 
 export default CauseDetailsFormik;

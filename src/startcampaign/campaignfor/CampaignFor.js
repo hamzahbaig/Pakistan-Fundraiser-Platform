@@ -91,7 +91,7 @@ const CampaignFor = props => {
             color="primary"
             fullWidth
             className={classes.submit}
-            onClick={props.handleSubmit}
+            onClick={props.nextStep}
           >
             Next
           </Button>

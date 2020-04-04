@@ -14,8 +14,6 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { Formik } from "formik";
-import * as Yup from "yup";
 import TextField from "@material-ui/core/TextField";
 
 const defaultMaskOptions = {
@@ -77,12 +75,7 @@ const CauseDetailsForm = ({ props }) => {
               onChange={handleChange}
               value={values.campaignType}
               onBlur={handleBlur}
-              error={touched.campaignType && errors.campaignType}
-              helperText={
-                touched.campaignType && errors.campaignType
-                  ? errors.campaignType
-                  : null
-              }
+              error={touched.campaignType && errors.campaignType ? true : false}
             >
               <MenuItem value={"Fixed"}>Fixed</MenuItem>
               <MenuItem value={"Flexible"}>Flexible</MenuItem>
@@ -102,7 +95,7 @@ const CauseDetailsForm = ({ props }) => {
               onChange={handleChange}
               value={values.amount}
               onBlur={handleBlur}
-              error={touched.amount && errors.amount}
+              error={touched.amount && errors.amount ? true : false}
               helperText={
                 touched.amount && errors.amount ? errors.amount : null
               }
@@ -119,7 +112,7 @@ const CauseDetailsForm = ({ props }) => {
                 onChange={val => setFieldValue("expiry", val)}
                 value={values.expiry}
                 onBlur={handleBlur}
-                error={touched.expiry && errors.expiry}
+                error={touched.expiry && errors.expiry ? true : false}
                 helperText={
                   touched.expiry && errors.expiry ? errors.expiry : null
                 }

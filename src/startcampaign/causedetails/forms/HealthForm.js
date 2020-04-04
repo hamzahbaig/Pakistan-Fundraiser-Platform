@@ -12,7 +12,6 @@ import PropTypes from "prop-types";
 import Switch from "@material-ui/core/Switch";
 import Collapse from "@material-ui/core/Collapse";
 
-
 const useStyles = makeStyles(theme => ({
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -94,7 +93,9 @@ const HealthForm = ({ props }) => {
                   onChange={handleChange}
                   value={values.hospitalName}
                   onBlur={handleBlur}
-                  error={touched.hospitalName && errors.hospitalName}
+                  error={
+                    touched.hospitalName && errors.hospitalName ? true : false
+                  }
                   helperText={
                     touched.hospitalName && errors.hospitalName
                       ? errors.hospitalName
@@ -110,7 +111,9 @@ const HealthForm = ({ props }) => {
                   onChange={handleChange}
                   value={values.hospitalEmail}
                   onBlur={handleBlur}
-                  error={touched.hospitalEmail && errors.hospitalEmail}
+                  error={
+                    touched.hospitalEmail && errors.hospitalEmail ? true : false
+                  }
                   helperText={
                     touched.hospitalEmail && errors.hospitalEmail
                       ? errors.hospitalEmail
@@ -126,7 +129,11 @@ const HealthForm = ({ props }) => {
                   onChange={handleChange}
                   value={values.hospitalAddress}
                   onBlur={handleBlur}
-                  error={touched.hospitalAddress && errors.hospitalAddress}
+                  error={
+                    touched.hospitalAddress && errors.hospitalAddress
+                      ? true
+                      : false
+                  }
                   helperText={
                     touched.hospitalAddress && errors.hospitalAddress
                       ? errors.hospitalAddress
@@ -143,11 +150,10 @@ const HealthForm = ({ props }) => {
                   onChange={handleChange}
                   value={values.hospitalContact}
                   onBlur={handleBlur}
-                  error={touched.hospitalContact && errors.hospitalContact}
-                  helperText={
+                  error={
                     touched.hospitalContact && errors.hospitalContact
-                      ? errors.hospitalContact
-                      : null
+                      ? true
+                      : false
                   }
                 />
               </Grid>
@@ -159,7 +165,7 @@ const HealthForm = ({ props }) => {
                   onChange={handleChange}
                   value={values.patientId}
                   onBlur={handleBlur}
-                  error={touched.patientId && errors.patientId}
+                  error={touched.patientId && errors.patientId ? true : false}
                   helperText={
                     touched.patientId && errors.patientId
                       ? errors.patientId

@@ -59,6 +59,7 @@ function contact(props) {
 contact.propTypes = {
   inputRef: PropTypes.func.isRequired
 };
+
 const EducationForm = ({ props }) => {
   const classes = useStyles();
   const { values, errors, touched, handleChange, handleBlur } = props;
@@ -78,7 +79,7 @@ const EducationForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.schoolName}
                 onBlur={handleBlur}
-                error={touched.schoolName && errors.schoolName}
+                error={touched.schoolName && errors.schoolName ? true : false}
                 helperText={
                   touched.schoolName && errors.schoolName
                     ? errors.schoolName
@@ -94,7 +95,7 @@ const EducationForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.schoolEmail}
                 onBlur={handleBlur}
-                error={touched.schoolEmail && errors.schoolEmail}
+                error={touched.schoolEmail && errors.schoolEmail ? true : false}
                 helperText={
                   touched.schoolEmail && errors.schoolEmail
                     ? errors.schoolEmail
@@ -110,7 +111,9 @@ const EducationForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.schoolAddress}
                 onBlur={handleBlur}
-                error={touched.schoolAddress && errors.schoolAddress}
+                error={
+                  touched.schoolAddress && errors.schoolAddress ? true : false
+                }
                 helperText={
                   touched.schoolAddress && errors.schoolAddress
                     ? errors.schoolAddress
@@ -127,11 +130,8 @@ const EducationForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.schoolContact}
                 onBlur={handleBlur}
-                error={touched.schoolContact && errors.schoolContact}
-                helperText={
-                  touched.schoolContact && errors.schoolContact
-                    ? errors.schoolContact
-                    : null
+                error={
+                  touched.schoolContact && errors.schoolContact ? true : false
                 }
               />
             </Grid>
@@ -143,10 +143,7 @@ const EducationForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.schoolId}
                 onBlur={handleBlur}
-                error={touched.schoolId && errors.schoolId}
-                helperText={
-                  touched.schoolId && errors.schoolId ? errors.schoolId : null
-                }
+                error={touched.schoolId && errors.schoolId ? true : false}
               />
             </Grid>
           </Grid>
