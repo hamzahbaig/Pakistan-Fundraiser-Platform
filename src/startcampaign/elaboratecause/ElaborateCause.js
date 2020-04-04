@@ -116,6 +116,7 @@ const ElaborateCause = props => {
             color="primary"
             fullWidth
             className={classes.submit}
+            onClick={props.handleSubmit}
           >
             Submit
           </Button>
@@ -132,6 +133,9 @@ const ElaborateCauseFormik = withFormik({
       story:
         "<p>Write your story. Keep it simple, personal, and about the specific use of funds.</p></br></br><p>Write About: Who is this campaign for? When do you need funds? How do you plan to use the funds</p>"
     };
+  },
+  handleSubmit(values) {
+    console.log(values, "SUBMITEED");
   },
   validationSchema: Yup.object().shape({
     campaignTitle: Yup.string()

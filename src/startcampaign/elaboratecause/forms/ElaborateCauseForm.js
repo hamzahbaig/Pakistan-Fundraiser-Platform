@@ -7,8 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import Zoom from "@material-ui/core/Zoom";
 import { UploaderComponent } from "@syncfusion/ej2-react-inputs";
 
-
-
 const useStyles = makeStyles(theme => ({
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -47,7 +45,9 @@ const ElaborateCauseForm = ({ props }) => {
                 onChange={handleChange}
                 value={values.campaignTitle}
                 onBlur={handleBlur}
-                error={touched.campaignTitle && errors.campaignTitle}
+                error={
+                  touched.campaignTitle && errors.campaignTitle ? true : false
+                }
                 helperText={
                   touched.campaignTitle && errors.campaignTitle
                     ? errors.campaignTitle
