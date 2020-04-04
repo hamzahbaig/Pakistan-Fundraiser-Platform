@@ -40,13 +40,6 @@ export class StartCampaign extends Component {
           <ElaborateCause prevStep={this.prevStep} step={this.state.step} />
         );
     }
-    return (
-      <div>
-        {/* <CampaignFor /> */}
-        {/* <CauseDetails /> */}
-        <ElaborateCause />
-      </div>
-    );
   }
 }
 

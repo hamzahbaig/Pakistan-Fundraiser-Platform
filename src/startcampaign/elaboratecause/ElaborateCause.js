@@ -9,6 +9,9 @@ import CKEditor from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ElaborateCauseForm from "./forms/ElaborateCauseForm";
 import { ProgressBar } from "react-bootstrap";
+import { withFormik } from "formik";
+import * as Yup from "yup";
+
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -37,16 +40,9 @@ const useStyles = makeStyles(theme => ({
 
 const ElaborateCause = props => {
   const classes = useStyles();
-  const [value, setValue] = useState("Myself");
-  const [story, setStory] = useState(
-    "<p>Write your story. Keep it simple, personal, and about the specific use of funds.</p></br></br><p>Write About: Who is this campaign for? When do you need funds? How do you plan to use the funds</p>"
-  );
-  const handleOnChange = (e, editor) => {
-    console.log(editor.getData());
-    setStory(editor.getData());
-  };
   return (
     <Container component="main" maxWidth="xs">
+      {JSON.stringify(props.values)}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}></Avatar>
         <Typography component="h1" variant="h5">
@@ -54,7 +50,7 @@ const ElaborateCause = props => {
         </Typography>
       </div>
 
-      <ElaborateCauseForm />
+      <ElaborateCauseForm props={props} />
 
       {/* Editior Component */}
       <Grid item className={classes.story}>
@@ -65,8 +61,10 @@ const ElaborateCause = props => {
       <Grid item className="mt-4">
         <CKEditor
           editor={ClassicEditor}
-          onChange={handleOnChange}
-          data={story}
+          onChange={(e, editor) =>
+            props.setFieldValue("story", editor.getData())
+          }
+          data={props.values.story}
           config={{
             toolbar: [
               "heading",
@@ -127,4 +125,20 @@ const ElaborateCause = props => {
   );
 };
 
-export default ElaborateCause;
+const ElaborateCauseFormik = withFormik({
+  mapPropsToValues() {
+    return {
+      campaignTitle: "",
+      story:
+        "<p>Write your story. Keep it simple, personal, and about the specific use of funds.</p></br></br><p>Write About: Who is this campaign for? When do you need funds? How do you plan to use the funds</p>"
+    };
+  },
+  validationSchema: Yup.object().shape({
+    campaignTitle: Yup.string()
+      .min(1, "Must have a character")
+      .max(255, "Must be shorter than 255 characters")
+      .required("Must enter this field")
+  })
+})(ElaborateCause);
+
+export default ElaborateCauseFormik;

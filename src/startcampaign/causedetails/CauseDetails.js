@@ -12,6 +12,7 @@ import HealthForm from "./forms/HealthForm";
 import { ProgressBar } from "react-bootstrap";
 import { withFormik } from "formik";
 import * as Yup from "yup";
+
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -121,11 +122,13 @@ const CauseDetailsFormik = withFormik({
       campaignType: "",
       amount: "",
       expiry: new Date(),
+
       schoolName: "",
       schoolEmail: "",
       schoolAddress: "",
       schoolContact: "+92-   -       ",
       schoolId: "",
+      
       hospital: false,
       hospitalName: "",
       hospitalEmail: "",
