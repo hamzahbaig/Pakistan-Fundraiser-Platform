@@ -161,7 +161,7 @@ const CauseDetailsFormik = withFormik({
           "Phone number is not valid"
         ),
       });
-    } else if (props.causeDetails == "Health") {
+    } else if (props.causeDetails == "Health" && props.campaign.hospital) {
       return Yup.object().shape({
         expiry: Yup.date().required("Must enter this field"),
         amount: Yup.string()
@@ -189,7 +189,7 @@ const CauseDetailsFormik = withFormik({
           .max(120, "ID should be less than 120")
           .required("Must enter this field"),
       });
-    } else if (props.causeDetails == "Other") {
+    } else {
       return Yup.object().shape({
         expiry: Yup.date().required("Must enter this field"),
         amount: Yup.string()

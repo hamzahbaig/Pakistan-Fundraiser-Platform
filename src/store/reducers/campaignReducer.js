@@ -58,9 +58,9 @@ const campaignReducer = (state = initState, action) => {
       console.log("create project error", action.err);
       return state;
     case "SAVE_CAMPAIGN_FOR":
-      return { ...action.values };
+      return { ...action.values, campaignFor: action.condition };
     case "SAVE_CAUSE_DETAILS":
-      return { ...state, ...action.values };
+      return { ...state, ...action.values, causeDetails: action.condition };
     case "SAVE_ELABORATE_CAUSE":
       return { ...state, ...action.values };
     default:

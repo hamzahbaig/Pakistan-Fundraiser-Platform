@@ -25,14 +25,14 @@ export const createProject = (project) => {
 };
 
 export const saveCampaignFor = (values, condition) => {
-  console.log(values, condition, "PROJECT ACTIONS");
+  console.log(values, condition, "PROJECT ACTIONS -> SAVE CAMPAIGN");
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     dispatch({ type: "SAVE_CAMPAIGN_FOR", values, condition });
   };
 };
 
 export const saveCauseDetails = (values, condition) => {
-  console.log(values, condition, "PROJECT ACTIONS");
+  console.log(values, condition, "PROJECT ACTIONS -> SAVE CAUSE DETAILS");
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     dispatch({ type: "SAVE_CAUSE_DETAILS", values, condition });
   };
