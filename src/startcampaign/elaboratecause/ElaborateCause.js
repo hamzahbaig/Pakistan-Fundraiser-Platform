@@ -138,6 +138,7 @@ const ElaborateCauseFormik = withFormik({
     setTimeout(() => {
       console.log(values, "SUBMITEED");
       props.saveElaborateCause(values);
+      props.history.push("/")
     }, 500);
   },
   validationSchema: Yup.object().shape({

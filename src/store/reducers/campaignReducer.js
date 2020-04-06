@@ -61,8 +61,12 @@ const campaignReducer = (state = initState, action) => {
       return { ...action.values, campaignFor: action.condition };
     case "SAVE_CAUSE_DETAILS":
       return { ...state, ...action.values, causeDetails: action.condition };
-    case "SAVE_ELABORATE_CAUSE":
+    case "CREATING_CAMPAIGN":
+      console.log("Campaign created", action.finalCampaign);
       return { ...state, ...action.values };
+    case "CREATING_CAMPAIGN_ERROR":
+      console.log("Campaign created error", action.err);
+      return state;
     default:
       return state;
   }

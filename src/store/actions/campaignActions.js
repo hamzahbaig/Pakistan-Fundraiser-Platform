@@ -153,6 +153,8 @@ export const saveElaborateCause = (values) => {
       };
     }
 
+    const campaignOwnerId = getState().firebase.auth.uid;
+
     // Final Campaign...
     let finalCampaign = {
       ...campaignFor,
@@ -161,10 +163,25 @@ export const saveElaborateCause = (values) => {
       causeDetails: campaign.causeDetails,
       campaignTitle: values.campaignTitle,
       story: values.story,
+      // campaignCreater information
+      createdAt: new Date(),
+      campaignOwnerId,
     };
+
     console.log("FINAL CAMPAIGN=> ", finalCampaign);
 
-    // Save Data in Database!
-    dispatch({ type: "SAVE_ELABORATE_CAUSE", values });
+    // Saving data in database
+    const firestore = getFirestore();
+    firestore
+      .collection("campaigns")
+      .add({
+        ...finalCampaign,
+      })
+      .then(() => {
+        dispatch({ type: "CREATING_CAMPAIGN", finalCampaign });
+      })
+      .catch((err) => {
+        dispatch({ type: "CREATING_CAMPAIGN_ERROR", err });
+      });
   };
 };

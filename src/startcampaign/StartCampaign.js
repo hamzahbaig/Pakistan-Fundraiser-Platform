@@ -60,7 +60,11 @@ export class StartCampaign extends Component {
         );
       case 3:
         return (
-          <ElaborateCause prevStep={this.prevStep} step={this.state.step} />
+          <ElaborateCause
+            prevStep={this.prevStep}
+            step={this.state.step}
+            history={this.props.history}
+          />
         );
     }
   }
