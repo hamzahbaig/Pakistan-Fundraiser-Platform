@@ -35,7 +35,7 @@ const CampaignList = ({ campaigns }) => {
       {campaigns &&
         campaigns.map((campaign) => (
           <Grid item key={campaign.id} xs={12} sm={6} md={4}>
-            <Link to="/campaigns/">
+            <Link to={"/campaigns/" + campaign.id}>
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.cardMedia}

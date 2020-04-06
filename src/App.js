@@ -12,6 +12,7 @@ import { isLoaded } from "react-redux-firebase";
 import MenuAppBar from "./components/navigationbar/MenuAppBar";
 import HomePage from "./components/home/HomePage";
 import StartCampaign from "./startcampaign/StartCampaign";
+import CampaignPage from "./components/home/CampaignPage"
 function AuthIsLoaded({ children }) {
   const auth = useSelector(state => state.firebase.auth);
   if (!isLoaded(auth)) return null;
@@ -28,7 +29,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/startcampaign" component={StartCampaign} />
-            <Route exact path="/project/:id" component={ProjectDetails} />
+            <Route exact path="/campaigns/:id" component={CampaignPage} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={UserForm} />
             <Route exact path="/create" component={CreateProject} />
