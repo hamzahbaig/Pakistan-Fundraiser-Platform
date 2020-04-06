@@ -2,39 +2,42 @@ import React, { Component } from "react";
 import CampaignFor from "./campaignfor/CampaignFor";
 import CauseDetails from "./causedetails/CauseDetails";
 import ElaborateCause from "./elaboratecause/ElaborateCause";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 export class StartCampaign extends Component {
   state = {
     step: 1,
     campaignFor: "Myself",
-    causeDetails: "Education"
+    causeDetails: "Education",
   };
 
-  setCampaignFor = value => {
+  setCampaignFor = (value) => {
     this.setState({ campaignFor: value });
   };
 
-  setCauseDetails = value => {
+  setCauseDetails = (value) => {
     this.setState({ causeDetails: value });
   };
 
   nextStep = () => {
     const { step } = this.state;
     this.setState({
-      step: step + 1
+      step: step + 1,
     });
   };
 
   prevStep = () => {
     const { step } = this.state;
     this.setState({
-      step: step - 1
+      step: step - 1,
     });
   };
 
   render() {
     const { step } = this.state;
-
+    const { auth } = this.props;
+    if (!auth.uid) return <Redirect to="/signin" />;
     switch (step) {
       case 1:
         return (
@@ -63,4 +66,10 @@ export class StartCampaign extends Component {
   }
 }
 
-export default StartCampaign;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+  };
+};
+
+export default connect(mapStateToProps, null)(StartCampaign);

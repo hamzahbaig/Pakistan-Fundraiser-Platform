@@ -53,8 +53,6 @@ const CampaignFor = (props) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
-      {JSON.stringify(props.values)}
-
       <div className={classes.paper}>
         <Avatar className={classes.avatar}></Avatar>
         <Typography component="h1" variant="h5">

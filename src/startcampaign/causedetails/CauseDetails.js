@@ -53,7 +53,6 @@ const CauseDetails = (props) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
-      {JSON.stringify(props.values)}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}></Avatar>
         <Typography component="h1" variant="h5">
@@ -106,6 +105,7 @@ const CauseDetails = (props) => {
             fullWidth
             className={classes.submit}
             onClick={props.handleSubmit}
+            disabled={props.isSubmitting}
           >
             Next
           </Button>

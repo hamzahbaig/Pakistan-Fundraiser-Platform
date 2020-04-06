@@ -25,23 +25,145 @@ export const createProject = (project) => {
 };
 
 export const saveCampaignFor = (values, condition) => {
-  console.log(values, condition, "PROJECT ACTIONS -> SAVE CAMPAIGN");
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     dispatch({ type: "SAVE_CAMPAIGN_FOR", values, condition });
   };
 };
 
 export const saveCauseDetails = (values, condition) => {
-  console.log(values, condition, "PROJECT ACTIONS -> SAVE CAUSE DETAILS");
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     dispatch({ type: "SAVE_CAUSE_DETAILS", values, condition });
   };
 };
 
 export const saveElaborateCause = (values) => {
-  console.log(values, "PROJECT_ACTIONS", "SAVE ELABORATE");
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-    console.log(getState().campaign);
+    const campaign = getState().campaign;
+    let campaignFor = {};
+    let causeDetails = {};
+
+    // campaignFor
+    if (campaign.campaignFor == "Myself") {
+      const {
+        myselfFirstName,
+        myselfLastName,
+        myselfAge,
+        myselfGender,
+      } = campaign;
+      campaignFor = {
+        myselfFirstName,
+        myselfLastName,
+        myselfAge,
+        myselfGender,
+      };
+    } else if (campaign.campaignFor == "Project") {
+      const {
+        projectOrganiserName,
+        projectOrganiserAddress,
+        projectOrganiserGender,
+        projectOrganiserContact,
+        projectOrganiserCnic,
+      } = campaign;
+      campaignFor = {
+        projectOrganiserName,
+        projectOrganiserAddress,
+        projectOrganiserGender,
+        projectOrganiserContact,
+        projectOrganiserCnic,
+      };
+    } else if (campaign.campaignFor == "Beneficiary") {
+      const {
+        beneficiaryFirstName,
+        beneficiaryLastName,
+        beneficiaryAge,
+        beneficiaryGender,
+        beneficiaryCnic,
+        beneficiaryAddress,
+        beneficiaryContact,
+      } = campaign;
+      campaignFor = {
+        beneficiaryFirstName,
+        beneficiaryLastName,
+        beneficiaryAge,
+        beneficiaryGender,
+        beneficiaryCnic,
+        beneficiaryAddress,
+        beneficiaryContact,
+      };
+    }
+
+    // causeDetails
+    if (campaign.causeDetails == "Education") {
+      const {
+        schoolName,
+        schoolEmail,
+        schoolAddress,
+        schoolContact,
+        schoolId,
+        campaignType,
+        amount,
+        expiry,
+      } = campaign;
+      causeDetails = {
+        schoolName,
+        schoolEmail,
+        schoolAddress,
+        schoolContact,
+        schoolId,
+        campaignType,
+        amount,
+        expiry,
+      };
+    } else if (campaign.causeDetails == "Health") {
+      if (campaign.hospital) {
+        const {
+          campaignType,
+          amount,
+          expiry,
+          hospital,
+          hospitalName,
+          hospitalEmail,
+          hospitalAddress,
+          hospitalContact,
+          patientId,
+        } = campaign;
+        causeDetails = {
+          campaignType,
+          amount,
+          expiry,
+          hospital,
+          hospitalName,
+          hospitalEmail,
+          hospitalAddress,
+          hospitalContact,
+          patientId,
+        };
+      } else {
+        const { hospital } = campaign;
+        causeDetails = {
+          hospital,
+        };
+      }
+    } else if (campaign.causeDetails == "Other") {
+      const { campaignType, amount, expiry } = campaign;
+      causeDetails = {
+        campaignType,
+        amount,
+        expiry,
+      };
+    }
+
+    // Final Campaign...
+    let finalCampaign = {
+      ...campaignFor,
+      ...causeDetails,
+      campaignFor: campaign.campaignFor,
+      causeDetails: campaign.causeDetails,
+      campaignTitle: values.campaignTitle,
+      story: values.story,
+    };
+    console.log("FINAL CAMPAIGN=> ", finalCampaign);
+
     // Save Data in Database!
     dispatch({ type: "SAVE_ELABORATE_CAUSE", values });
   };
