@@ -11,34 +11,36 @@ import ElaborateCauseForm from "./forms/ElaborateCauseForm";
 import { ProgressBar } from "react-bootstrap";
 import { withFormik } from "formik";
 import * as Yup from "yup";
+import { saveElaborateCause } from "../../store/actions/campaignActions";
+import { connect } from "react-redux";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   story: {
     marginTop: theme.spacing(3),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(-1)
+    marginTop: theme.spacing(-1),
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
-const ElaborateCause = props => {
+const ElaborateCause = (props) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
@@ -81,10 +83,10 @@ const ElaborateCause = props => {
               "blockQuote",
               "insertTable",
               "undo",
-              "redo"
-            ]
+              "redo",
+            ],
           }}
-          onInit={editor => {
+          onInit={(editor) => {
             console.log(editor);
           }}
         />
@@ -127,24 +129,38 @@ const ElaborateCause = props => {
 };
 
 const ElaborateCauseFormik = withFormik({
-  mapPropsToValues() {
+  mapPropsToValues(props) {
     return {
-      campaignTitle: "",
-      story:
-        "<p>Write your story. Keep it simple, personal, and about the specific use of funds.</p></br></br><p>Write About: Who is this campaign for? When do you need funds? How do you plan to use the funds</p>"
+      ...props.campaign,
     };
   },
-  handleSubmit(values,props) {
+  handleSubmit(values, { props }) {
     setTimeout(() => {
       console.log(values, "SUBMITEED");
+      props.saveElaborateCause(values);
     }, 500);
   },
   validationSchema: Yup.object().shape({
     campaignTitle: Yup.string()
       .min(1, "Must have a character")
       .max(255, "Must be shorter than 255 characters")
-      .required("Must enter this field")
-  })
+      .required("Must enter this field"),
+  }),
 })(ElaborateCause);
 
-export default ElaborateCauseFormik;
+const mapStateToProps = (state) => {
+  return {
+    campaign: state.campaign,
+    auth: state.firebase.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveElaborateCause: (values) => dispatch(saveElaborateCause(values)),
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ElaborateCauseFormik);

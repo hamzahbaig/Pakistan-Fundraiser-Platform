@@ -12,42 +12,44 @@ import HealthForm from "./forms/HealthForm";
 import { ProgressBar } from "react-bootstrap";
 import { withFormik } from "formik";
 import * as Yup from "yup";
+import { saveCauseDetails } from "../../store/actions/campaignActions";
+import { connect } from "react-redux";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 const causeType = [
   {
     key: "Education",
     text: "Education",
-    value: "Education"
+    value: "Education",
   },
   {
     key: "Health",
     text: "Health",
-    value: "Health"
+    value: "Health",
   },
   {
     key: "Other",
     text: "Other",
-    value: "Other"
-  }
+    value: "Other",
+  },
 ];
 
-const CauseDetails = props => {
+const CauseDetails = (props) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
@@ -118,30 +120,16 @@ const phoneRegExp = /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{
 const ammountRegex = /^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(\.[0-9][0-9])?$/;
 
 const CauseDetailsFormik = withFormik({
-  mapPropsToValues() {
+  mapPropsToValues(props) {
     return {
-      campaignType: "",
-      amount: "",
-      expiry: new Date(),
-
-      schoolName: "",
-      schoolEmail: "",
-      schoolAddress: "",
-      schoolContact: "+92-   -       ",
-      schoolId: "",
-
-      hospital: false,
-      hospitalName: "",
-      hospitalEmail: "",
-      hospitalAddress: "",
-      hospitalContact: "+92-   -       ",
-      patientId: ""
+      ...props.campaign,
     };
   },
-  handleSubmit(values, props) {
+  handleSubmit(values, { props }) {
     setTimeout(() => {
       console.log(values, "SUBMITEED");
-      props.props.nextStep();
+      props.saveCauseDetails(values, props.causeDetails);
+      props.nextStep();
     }, 500);
   },
   validationSchema(props) {
@@ -171,7 +159,7 @@ const CauseDetailsFormik = withFormik({
         schoolContact: Yup.string().matches(
           phoneRegExp,
           "Phone number is not valid"
-        )
+        ),
       });
     } else if (props.causeDetails == "Health") {
       return Yup.object().shape({
@@ -199,7 +187,7 @@ const CauseDetailsFormik = withFormik({
         patientId: Yup.string()
           .min(1, "ID should be greater than 1")
           .max(120, "ID should be less than 120")
-          .required("Must enter this field")
+          .required("Must enter this field"),
       });
     } else if (props.causeDetails == "Other") {
       return Yup.object().shape({
@@ -207,10 +195,23 @@ const CauseDetailsFormik = withFormik({
         amount: Yup.string()
           .matches(ammountRegex, "Invalid Amount")
           .required("Must enter this field"),
-        campaignType: Yup.string().required("Must enter this field")
+        campaignType: Yup.string().required("Must enter this field"),
       });
     }
-  }
+  },
 })(CauseDetails);
 
-export default CauseDetailsFormik;
+const mapStateToProps = (state) => {
+  return {
+    campaign: state.campaign,
+    auth: state.firebase.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveCauseDetails: (values, condition) =>
+      dispatch(saveCauseDetails(values, condition)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CauseDetailsFormik);

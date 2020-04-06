@@ -12,41 +12,44 @@ import BeneficiaryForm from "./forms/BeneficiaryForm";
 import { ProgressBar } from "react-bootstrap";
 import { withFormik, Form } from "formik";
 import * as Yup from "yup";
-const useStyles = makeStyles(theme => ({
+import { connect } from "react-redux";
+import { saveCampaignFor } from "../../store/actions/campaignActions";
+
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 const campaignOptions = [
   {
     key: "Myself",
     text: "Myself",
-    value: "Myself"
+    value: "Myself",
   },
   {
     key: "Project",
     text: "Project",
-    value: "Project"
+    value: "Project",
   },
   {
     key: "Beneficiary",
     text: "Beneficiary",
-    value: "Beneficiary"
-  }
+    value: "Beneficiary",
+  },
 ];
 
-const CampaignFor = props => {
+const CampaignFor = (props) => {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
@@ -92,6 +95,7 @@ const CampaignFor = props => {
             fullWidth
             className={classes.submit}
             onClick={props.handleSubmit}
+            disabled={props.isSubmitting}
           >
             Next
           </Button>
@@ -106,32 +110,17 @@ const phoneRegExp = /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{
 const cnicRegExp = /^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$/;
 
 const CampaignForFormik = withFormik({
-  mapPropsToValues() {
+  mapPropsToValues(props) {
     return {
-      myselfFirstName: "",
-      myselfLastName: "",
-      myselfAge: "",
-      myselfGender: "",
-
-      projectOrganiserName: "",
-      projectOrganiserAddress: "",
-      projectOrganiserGender: "",
-      projectOrganiserContact: "+92-   -       ",
-      projectOrganiserCnic: "     -       - ",
-
-      beneficiaryFirstName: "",
-      beneficiaryLastName: "",
-      beneficiaryAge: "",
-      beneficiaryGender: "",
-      beneficiaryCnic: "     -       - ",
-      beneficiaryAddress: "",
-      beneficiaryContact: "+92-   -       "
+      ...props.campaign,
     };
   },
-  handleSubmit(values, props) {
+  handleSubmit(values, { props, resetForm }) {
     setTimeout(() => {
-      console.log(values, "SUBMITEED");
-      props.props.nextStep();
+      console.log(values, "SUBMITEED CAMPAIGN FOR");
+      props.saveCampaignFor(values, props.campaignFor);
+      // resetForm();
+      props.nextStep();
     }, 500);
   },
   validationSchema(props) {
@@ -150,7 +139,7 @@ const CampaignForFormik = withFormik({
           .min(1, "Age should be greater than 1")
           .max(120, "Age should be less than 120")
           .required("Must enter this field"),
-        myselfGender: Yup.string().required("Must enter this field")
+        myselfGender: Yup.string().required("Must enter this field"),
       });
     } else if (props.campaignFor == "Project") {
       return Yup.object().shape({
@@ -170,7 +159,7 @@ const CampaignForFormik = withFormik({
           phoneRegExp,
           "Phone number is not valid"
         ),
-        projectOrganiserGender: Yup.string().required("Must enter this field")
+        projectOrganiserGender: Yup.string().required("Must enter this field"),
       });
     } else if (props.campaignFor == "Beneficiary") {
       return Yup.object().shape({
@@ -196,10 +185,23 @@ const CampaignForFormik = withFormik({
         beneficiaryContact: Yup.string().matches(
           phoneRegExp,
           "Phone number is not valid"
-        )
+        ),
       });
     }
-  }
+  },
 })(CampaignFor);
 
-export default CampaignForFormik;
+const mapStateToProps = (state) => {
+  return {
+    campaign: state.campaign,
+    auth: state.firebase.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveCampaignFor: (values, condition) =>
+      dispatch(saveCampaignFor(values, condition)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CampaignForFormik);
