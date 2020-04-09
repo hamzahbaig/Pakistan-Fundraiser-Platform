@@ -154,8 +154,11 @@ export const saveElaborateCause = (values) => {
     }
 
     const campaignOwnerId = getState().firebase.auth.uid;
+    const firestore = getFirestore();
+    const profile = getState().firebase.profile;
 
     // Final Campaign...
+
     let finalCampaign = {
       ...campaignFor,
       ...causeDetails,
@@ -166,12 +169,16 @@ export const saveElaborateCause = (values) => {
       // campaignCreater information
       createdAt: new Date(),
       campaignOwnerId,
+      campaignOrganiserName: profile.NGO
+        ? profile.ngoName
+        : profile.firstName + profile.lastName,
+      campaignOrganiserEmail: profile.NGO ?  profile.ngoEmail : profile.email 
     };
 
     console.log("FINAL CAMPAIGN=> ", finalCampaign);
 
     // Saving data in database
-    const firestore = getFirestore();
+
     firestore
       .collection("campaigns")
       .add({

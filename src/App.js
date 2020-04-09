@@ -12,9 +12,10 @@ import { isLoaded } from "react-redux-firebase";
 import MenuAppBar from "./components/navigationbar/MenuAppBar";
 import HomePage from "./components/home/HomePage";
 import StartCampaign from "./startcampaign/StartCampaign";
-import CampaignPage from "./components/home/CampaignPage"
+// import CampaignPage from "./components/home/CampaignPage"
+import CampaignPage from "./components/campaigpage/CampaignPage";
 function AuthIsLoaded({ children }) {
-  const auth = useSelector(state => state.firebase.auth);
+  const auth = useSelector((state) => state.firebase.auth);
   if (!isLoaded(auth)) return null;
   console.log(auth);
   return children;
