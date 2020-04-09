@@ -17,7 +17,6 @@ class CreateProject extends React.Component {
     this.setState({
       activeList: temp
     });
-    console.log(this.state.activeList);
   };
 
   handleSubmit = e => {

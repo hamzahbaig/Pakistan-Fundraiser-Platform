@@ -85,9 +85,7 @@ const ElaborateCause = (props) => {
               "redo",
             ],
           }}
-          onInit={(editor) => {
-            console.log(editor);
-          }}
+          
         />
       </Grid>
       {/* End Editor Component */}
@@ -136,7 +134,6 @@ const ElaborateCauseFormik = withFormik({
   },
   handleSubmit(values, { props }) {
     setTimeout(() => {
-      console.log(values, "SUBMITEED");
       props.saveElaborateCause(values);
       props.history.push("/")
     }, 500);

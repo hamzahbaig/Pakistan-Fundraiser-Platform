@@ -115,7 +115,6 @@ const CampaignForFormik = withFormik({
   },
   handleSubmit(values, { props, resetForm }) {
     setTimeout(() => {
-      console.log(values, "SUBMITEED CAMPAIGN FOR");
       props.saveCampaignFor(values, props.campaignFor);
       // resetForm();
       props.nextStep();

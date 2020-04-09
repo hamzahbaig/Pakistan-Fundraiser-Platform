@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CategorySection = (props) => {
   const { campaigns } = props;
-  console.log("abc", campaigns);
   const classes = useStyles();
   return (
     <Container className={classes.cardGrid} maxWidth="md">

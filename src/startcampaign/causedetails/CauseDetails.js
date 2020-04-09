@@ -127,7 +127,6 @@ const CauseDetailsFormik = withFormik({
   },
   handleSubmit(values, { props }) {
     setTimeout(() => {
-      console.log(values, "SUBMITEED");
       props.saveCauseDetails(values, props.causeDetails);
       props.nextStep();
     }, 500);
