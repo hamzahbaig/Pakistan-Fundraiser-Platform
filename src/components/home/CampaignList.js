@@ -11,3 +11,4 @@ const CampaignList = ({ campaigns }) => {
 };
 
 export default CampaignList;
+ 
