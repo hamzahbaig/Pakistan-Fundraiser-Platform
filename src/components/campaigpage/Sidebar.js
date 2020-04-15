@@ -6,7 +6,9 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import CampaignDonationComponent from "./CampaignDonationComponent";
-
+import CampaignOrganiserDetails from "./CampaignOrganiserDetails";
+import BeneficiaryDetails from "./BeneficiaryDetails";
+import Supporters from "./Supporters";
 const useStyles = makeStyles((theme) => ({
   sidebarAboutBox: {
     padding: theme.spacing(2),
@@ -14,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
   },
   sidebarSection: {
     marginTop: theme.spacing(3),
+  },
+  campaignOrganiserDetails: {
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.grey[200],
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -26,10 +33,18 @@ export default function Sidebar(props) {
       <Paper elevation={0} className={classes.sidebarAboutBox}>
         <CampaignDonationComponent />
       </Paper>
+      <Paper elevation={0} className={classes.campaignOrganiserDetails}>
+        <CampaignOrganiserDetails />
+      </Paper>
+      <Paper elevation={0} className={classes.campaignOrganiserDetails}>
+        <BeneficiaryDetails />
+      </Paper>
       <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-        Social
+        Supporters
       </Typography>
-      {social.map((network) => (
+      <Supporters/>
+
+      {/* {social.map((network) => (
         <Link display="block" variant="body1" href="#" key={network}>
           <Grid container direction="row" spacing={1} alignItems="center">
             <Grid item>
@@ -38,7 +53,7 @@ export default function Sidebar(props) {
             <Grid item>{network.name}</Grid>
           </Grid>
         </Link>
-      ))}
+      ))} */}
     </Grid>
   );
 }

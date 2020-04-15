@@ -139,9 +139,12 @@ export const saveElaborateCause = (values) => {
           patientId,
         };
       } else {
-        const { hospital } = campaign;
+        const { hospital, campaignType, amount, expiry } = campaign;
         causeDetails = {
           hospital,
+          campaignType,
+          amount,
+          expiry,
         };
       }
     } else if (campaign.causeDetails == "Other") {
@@ -172,7 +175,8 @@ export const saveElaborateCause = (values) => {
       campaignOrganiserName: profile.NGO
         ? profile.ngoName
         : profile.firstName + profile.lastName,
-      campaignOrganiserEmail: profile.NGO ?  profile.ngoEmail : profile.email 
+      campaignOrganiserEmail: profile.NGO ? profile.ngoEmail : profile.email,
+      supporters: ["Hamzah Baig", "Minhal Aftab", "Suleman Shahid"],
     };
 
     console.log("FINAL CAMPAIGN=> ", finalCampaign);
