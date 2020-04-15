@@ -92,6 +92,7 @@ const CampaignPage = (props) => {
                 description={sidebar.description}
                 archives={sidebar.archives}
                 social={sidebar.social}
+                campaign = {campaign}
               />
             </Grid>
           </main>

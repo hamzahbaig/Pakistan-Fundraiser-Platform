@@ -26,18 +26,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Sidebar(props) {
   const classes = useStyles();
-  const { archives, description, social, title } = props;
+  const { campaign } = props;
 
   return (
     <Grid item xs={12} md={4}>
       <Paper elevation={0} className={classes.sidebarAboutBox}>
-        <CampaignDonationComponent />
+        <CampaignDonationComponent campaign={campaign} />
       </Paper>
       <Paper elevation={0} className={classes.campaignOrganiserDetails}>
-        <CampaignOrganiserDetails />
+        <CampaignOrganiserDetails campaign={campaign}/>
       </Paper>
       <Paper elevation={0} className={classes.campaignOrganiserDetails}>
-        <BeneficiaryDetails />
+        <BeneficiaryDetails campaign={campaign}/>
       </Paper>
       <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
         Supporters

@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import {  LinearProgress } from "@material-ui/core";
+import { LinearProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-
+import moment from "moment";
 const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CampaignDonationComponent = (props) => {
   const classes = useStyles();
+  const { amount, expiry } = props.campaign;
   return (
     <div>
       <div>
@@ -22,7 +23,7 @@ const CampaignDonationComponent = (props) => {
           color="primary"
           display="inline"
         >
-          {"Rs. " + "7,123,123"}
+          {"Rs. " + amount}
         </Typography>
         <Typography variant="subtitle1" display="inline" className="ml-2">
           {"raised"}
@@ -40,10 +41,11 @@ const CampaignDonationComponent = (props) => {
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <Typography variant="subtitle1" display="inline">
-          {"Goal: Rs.1,000,000"}
+          {"Goal: " + amount}
         </Typography>
         <Typography variant="subtitle1" display="inline" align="right">
-          {"19 Days to go"}
+          {"Expires: " +
+            moment(expiry.toDate()).format("MMM Do YYYY")}
         </Typography>
       </div>
       <div className="mt-2">

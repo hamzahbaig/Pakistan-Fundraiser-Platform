@@ -12,6 +12,19 @@ const useStyles = makeStyles((theme) => ({
 
 const BeneficiaryDetails = (props) => {
   const classes = useStyles();
+  let benefeciary = "";
+  const { campaignFor } = props.campaign;
+  if (campaignFor == "Myself") {
+    benefeciary =
+      props.campaign.myselfFirstName + " " + props.campaign.myselfLastName;
+  } else if (campaignFor == "Project") {
+    benefeciary = props.campaign.projectOrganiserName;
+  } else if (campaignFor == "Beneficiary") {
+    benefeciary =
+      props.campaign.beneficiaryFirstName +
+      " " +
+      props.campaign.benefeciaryLastName;
+  }
   return (
     <div>
       <div>
@@ -29,7 +42,7 @@ const BeneficiaryDetails = (props) => {
         <Divider />
       </div>
       <div className="mt-1">
-        <Typography variant="subtitle1">{"Hamzah Baig"}</Typography>
+        <Typography variant="subtitle1">{benefeciary}</Typography>
       </div>
     </div>
   );
