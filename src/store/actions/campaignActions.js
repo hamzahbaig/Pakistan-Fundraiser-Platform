@@ -182,11 +182,14 @@ export const saveElaborateCause = (values) => {
     console.log("FINAL CAMPAIGN=> ", finalCampaign);
 
     // Saving data in database
+    let campaignRef = firestore.collection("campaigns").doc();
 
     firestore
       .collection("campaigns")
-      .add({
+      .doc(campaignRef.id)
+      .set({
         ...finalCampaign,
+        campaignId: campaignRef.id,
       })
       .then(() => {
         dispatch({ type: "CREATING_CAMPAIGN", finalCampaign });

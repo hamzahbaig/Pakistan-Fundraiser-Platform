@@ -21,6 +21,7 @@ import {
 import fbConfig from "./config/fbConfig";
 import firebase from "firebase";
 
+
 const store = createStore(
   rootReducer,
   compose(

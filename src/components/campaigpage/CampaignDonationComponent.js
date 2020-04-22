@@ -4,6 +4,9 @@ import Typography from "@material-ui/core/Typography";
 import { LinearProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import moment from "moment";
+import { addToBasket } from "../../store/actions/checkoutActions";
+import { connect } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -12,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CampaignDonationComponent = (props) => {
   const classes = useStyles();
+  console.log(props, "ABC");
   const { amount, expiry } = props.campaign;
   return (
     <div>
@@ -44,8 +48,7 @@ const CampaignDonationComponent = (props) => {
           {"Goal: " + amount}
         </Typography>
         <Typography variant="subtitle1" display="inline" align="right">
-          {"Expires: " +
-            moment(expiry.toDate()).format("MMM Do YYYY")}
+          {"Expires: " + moment(expiry.toDate()).format("MMM Do YYYY")}
         </Typography>
       </div>
       <div className="mt-2">
@@ -55,6 +58,10 @@ const CampaignDonationComponent = (props) => {
           color="primary"
           fullWidth
           className={classes.submit}
+          onClick={() =>
+            props.addToBasket(props.campaign, props.campaign.campaignId)
+          }
+          href="/checkout"
         >
           DONATE
         </Button>
@@ -63,4 +70,9 @@ const CampaignDonationComponent = (props) => {
   );
 };
 
-export default CampaignDonationComponent;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToBasket: (campaign, id) => dispatch(addToBasket(campaign, id)),
+  };
+};
+export default connect(null, mapDispatchToProps)(CampaignDonationComponent);

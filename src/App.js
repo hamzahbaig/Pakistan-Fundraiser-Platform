@@ -14,6 +14,7 @@ import HomePage from "./components/home/HomePage";
 import StartCampaign from "./startcampaign/StartCampaign";
 import CampaignPage from "./components/campaigpage/CampaignPage";
 import Footer from "./components/navigationbar/Footer";
+import Checkout from "./components/checkout/Checkout";
 function AuthIsLoaded({ children }) {
   const auth = useSelector((state) => state.firebase.auth);
   if (!isLoaded(auth)) return null;
@@ -34,6 +35,7 @@ function App() {
             <Route exact path="/signup" component={UserForm} />
             <Route exact path="/create" component={CreateProject} />
             <Route exact path="/category/:id" component={Category} />
+            <Route exact path="/checkout" component={Checkout} />
           </Switch>
           {/* <Footer /> */}
         </div>
