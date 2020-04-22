@@ -1,8 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -13,19 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import Basket from "./Basket";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import * as Yup from "yup";
+import { withFormik } from "formik";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -66,10 +53,10 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ["My Basket", "Review", "Donate"];
 
-function getStepContent(step) {
+function getStepContent(step, props) {
   switch (step) {
     case 0:
-      return <Basket />;
+      return <Basket props={props} />;
     case 1:
       return <PaymentForm />;
     case 2:
@@ -79,7 +66,7 @@ function getStepContent(step) {
   }
 }
 
-export default function Checkout() {
+function Checkout(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -120,7 +107,7 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, props)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
@@ -144,3 +131,22 @@ export default function Checkout() {
     </React.Fragment>
   );
 }
+
+const ammountRegex = /^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(\.[0-9][0-9])?$/;
+
+const CheckoutFormik = withFormik({
+  mapPropsToValues(props) {
+    return {
+      currentAmountRaised: "",
+    };
+  },
+  validationSchema(props) {
+    return Yup.object().shape({
+      currentAmountRaised: Yup.string()
+        .matches(ammountRegex, "Invalid Amount")
+        .required("Must enter this field"),
+    });
+  },
+})(Checkout);
+
+export default CheckoutFormik;

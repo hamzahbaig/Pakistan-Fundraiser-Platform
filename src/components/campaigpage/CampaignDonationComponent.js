@@ -7,6 +7,10 @@ import moment from "moment";
 import { addToBasket } from "../../store/actions/checkoutActions";
 import { connect } from "react-redux";
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -16,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const CampaignDonationComponent = (props) => {
   const classes = useStyles();
   console.log(props, "ABC");
-  const { amount, expiry } = props.campaign;
+  const { amount, expiry, amountRaised } = props.campaign;
   return (
     <div>
       <div>
@@ -27,7 +31,7 @@ const CampaignDonationComponent = (props) => {
           color="primary"
           display="inline"
         >
-          {"Rs. " + amount}
+          {"Rs. " + numberWithCommas(amountRaised)}
         </Typography>
         <Typography variant="subtitle1" display="inline" className="ml-2">
           {"raised"}
@@ -45,7 +49,7 @@ const CampaignDonationComponent = (props) => {
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <Typography variant="subtitle1" display="inline">
-          {"Goal: " + amount}
+          {"Goal: " + numberWithCommas(amount)}
         </Typography>
         <Typography variant="subtitle1" display="inline" align="right">
           {"Expires: " + moment(expiry.toDate()).format("MMM Do YYYY")}

@@ -111,7 +111,7 @@ export const saveElaborateCause = (values) => {
         schoolContact,
         schoolId,
         campaignType,
-        amount,
+        amount: parseInt(amount.replace(/,/g, "")),
         expiry,
       };
     } else if (campaign.causeDetails == "Health") {
@@ -129,7 +129,7 @@ export const saveElaborateCause = (values) => {
         } = campaign;
         causeDetails = {
           campaignType,
-          amount,
+          amount: parseInt(amount.replace(/,/g, "")),
           expiry,
           hospital,
           hospitalName,
@@ -143,7 +143,7 @@ export const saveElaborateCause = (values) => {
         causeDetails = {
           hospital,
           campaignType,
-          amount,
+          amount: parseInt(amount.replace(/,/g, "")),
           expiry,
         };
       }
@@ -151,7 +151,7 @@ export const saveElaborateCause = (values) => {
       const { campaignType, amount, expiry } = campaign;
       causeDetails = {
         campaignType,
-        amount,
+        amount: parseInt(amount.replace(/,/g, "")),
         expiry,
       };
     }
@@ -177,6 +177,7 @@ export const saveElaborateCause = (values) => {
         : profile.firstName + profile.lastName,
       campaignOrganiserEmail: profile.NGO ? profile.ngoEmail : profile.email,
       supporters: ["Hamzah Baig", "Minhal Aftab", "Suleman Shahid"],
+      amountRaised: 0,
     };
 
     console.log("FINAL CAMPAIGN=> ", finalCampaign);
