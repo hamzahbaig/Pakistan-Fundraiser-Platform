@@ -38,10 +38,8 @@ function Basket(props) {
     values,
     errors,
     touched,
-    handleChange,
     handleBlur,
     setFieldValue,
-    setFieldError,
   } = props.props;
   let { amount, amountRaised } = props.basket;
   let currentAmountRaised =
