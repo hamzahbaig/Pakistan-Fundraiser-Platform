@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 const CheckoutCard = ({ campaign, currentAmountRaised }) => {
   const classes = useStyles();
   return (
-    <Link href={"/campaigns/" + campaign.id} style={{ textDecoration: "none" }}>
+    <Link href={"/campaigns/" + campaign.campaignId} style={{ textDecoration: "none" }}>
       <Card className={classes.card} elevation={2}>
         <CardMedia
           className={classes.cardMedia}

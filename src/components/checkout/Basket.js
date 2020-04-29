@@ -2,7 +2,6 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import { connect } from "react-redux";
 import CheckoutCard from "./checkoutCard";
 import { LinearProgress } from "@material-ui/core";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -34,14 +33,8 @@ const CurrencyInput = ({ maskOptions, ...inputProps }) => {
 };
 
 function Basket(props) {
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    setFieldValue,
-  } = props.props;
-  let { amount, amountRaised } = props.basket;
+  const { values, errors, touched, handleBlur, setFieldValue } = props.props;
+  let { amount, amountRaised } = props.props.basket;
   let currentAmountRaised =
     values.currentAmountRaised == ""
       ? 0
@@ -54,7 +47,7 @@ function Basket(props) {
       <Grid container spacing={3} alignItems="center">
         <Grid item xs={12} sm={5}>
           <CheckoutCard
-            campaign={props.basket}
+            campaign={props.props.basket}
             currentAmountRaised={currentAmountRaised}
           />
         </Grid>
@@ -80,7 +73,7 @@ function Basket(props) {
               const val = event.target.value;
               if (val == "") {
                 setFieldValue("currentAmountRaised", val);
-                return
+                return;
               }
               const check = parseInt(val.replace(/,/g, ""));
               if (check + amountRaised <= amount) {
@@ -111,10 +104,4 @@ function Basket(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    basket: state.checkout.basket,
-  };
-};
-
-export default connect(mapStateToProps, null)(Basket);
+export default Basket;

@@ -13,6 +13,7 @@ import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import * as Yup from "yup";
 import { withFormik } from "formik";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -58,9 +59,9 @@ function getStepContent(step, props) {
     case 0:
       return <Basket props={props} />;
     case 1:
-      return <PaymentForm />;
+      return <Review props={props} />;
     case 2:
-      return <Review />;
+      return <PaymentForm />;
     default:
       throw new Error("Unknown step");
   }
@@ -149,4 +150,10 @@ const CheckoutFormik = withFormik({
   },
 })(Checkout);
 
-export default CheckoutFormik;
+const mapStateToProps = (state) => {
+  return {
+    basket: state.checkout.basket,
+  };
+};
+
+export default connect(mapStateToProps, null)(CheckoutFormik);
